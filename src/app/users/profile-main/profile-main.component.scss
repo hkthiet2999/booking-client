@@ -1,0 +1,71 @@
+
+@import '../../../style/variables';
+
+.user-view-card {
+  flex: 1 1 35%;
+  box-sizing: border-box;
+  max-width: 35%;
+
+  .user-info-container {
+    text-align: center;
+
+    .user-avatar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .user-avatar {
+        background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+        background-size: cover;
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    .user-title-container {
+      width: 100%;
+      padding-top: 16px;
+    }
+  }
+}
+
+.user-details-card {
+  flex: 1 1 75%;
+  box-sizing: border-box;
+  max-width: 65%;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+
+// TODO: Grid row
+.matero-row {
+  margin-right: $gutter * -0.5;
+  margin-left: $gutter * -0.5;
+}
+
+// TODO: Grid col
+.matero-col {
+  padding-right: $gutter * 0.5;
+  padding-left: $gutter * 0.5;
+}
+
+.matero-content {
+  position: relative;
+  padding: $gutter;
+}
+
+// .badge {
+//   @include badge();
+// }
+
+// .scrollbar-thin {
+//   @include scrollbar-thin();
+// }
+
+// .scrollbar-none {
+//   @include scrollbar-none();
+// }

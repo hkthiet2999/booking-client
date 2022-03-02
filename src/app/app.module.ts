@@ -5,16 +5,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { UsersModule } from './users/users.module';
+import { CommonComponentsModule } from './common/common-components.module';
+import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserLayoutComponent
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    UsersModule,
+    CommonComponentsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
