@@ -1,56 +1,95 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
+import { User } from 'src/app/_model/user';
+import { environment } from 'src/environments/environment';
+import { ILoginResponse } from '../login-response.interface';
 import { IUser } from '../user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  apiUrl = 'http://localhost:3000'
+  private userSubject: BehaviorSubject<User | null>;
+  public user: Observable<User | null>;
 
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
+  private BASE_URL = environment.API_URL;
 
-  login(user: IUser) {
-    const { email, password } = user;
-    return this.http.post(`${this.apiUrl}/auth/login`, { email, password }).pipe(
-      tap((res: any) => localStorage.setItem('token', res.access_token)),
-      tap(() =>
-        this.snackbar.open('Login Successfull', 'Close', {
-          duration: 2000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-        })
-      ),
-      catchError((e) => {
-        console.log(e)
-        this.snackbar.open(
-          `Login error: ${e.error.message}`,
-          'Close',
-          {
-            duration: 5000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-          }
-        );
-        return throwError(e);
-      })
-    );
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private snackbar: MatSnackBar
+  ) {
+    const userInLocalStorage = localStorage.getItem('user');
+    if (userInLocalStorage) {
+      this.userSubject = new BehaviorSubject<User | null>(
+        JSON.parse(userInLocalStorage)
+      );
+      this.user = this.userSubject.asObservable();
+    }
   }
 
-  register(user: IUser) {
-    return this.http.post<IUser>(`${this.apiUrl}/auth/register`, user).pipe(
-      tap((registeredUser: IUser) =>
-        this.snackbar.open(
-          `User ${registeredUser.email} registered successfully`,
-          'Close',
-          {
+  public get userValue(): User | null {
+    if (this.userSubject.value) {
+      return this.userSubject.value;
+    } else {
+      return null
+    }
+    
+  }
+
+  login(email: string, password: string) {
+    return this.http
+      .post<User>(`${this.BASE_URL}/auth/login`, { email, password })
+      .pipe(
+        // tap((res: any) => localStorage.setItem('token', res.access_token)),
+        map((user) => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        }),
+        tap(() =>
+          this.snackbar.open('Login Successfull', 'Close', {
             duration: 2000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
-          }
-        )
+          })
+        ),
+        catchError((e) => {
+          console.log(e);
+          this.snackbar.open(`Login error: ${e.error.message}`, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+          return throwError(e);
+        })
+      );
+  }
+
+  register(user: IUser) {
+    return this.http.post<IUser>(`${this.BASE_URL}/auth/register`, user).pipe(
+      tap(
+        (registeredUser: IUser) =>
+          this.snackbar.open(
+            `User ${registeredUser.email} registered successfully`,
+            'Close',
+            {
+              duration: 2000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            }
+          ),
       ),
       catchError((e) => {
         this.snackbar.open(
@@ -67,8 +106,10 @@ export class AuthService {
     );
   }
 
-  getLoggedInUser() {
-    // const decodedToken = this.jwtService.decodeToken();
-    // return decodedToken.user;
+  async logout() {
+    await this.http.post(`${this.BASE_URL}/auth/logout`, {});
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
   }
 }

@@ -25,10 +25,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.formLogin.valid) {
-      this.authService.login({
-        email: this.email.value,
-        password: this.password.value,
-      }).pipe(
+      const email = this.email.value;
+      const password = this.password.value;
+      this.authService.login(email, password).pipe(
         tap(() => this.router.navigate(['/']))
       ).subscribe()
     }
