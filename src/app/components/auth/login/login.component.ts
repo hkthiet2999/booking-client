@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
-import { AuthService } from '../services/auth-service';
+import { first, tap } from 'rxjs';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -27,9 +27,14 @@ export class LoginComponent implements OnInit {
     if (this.formLogin.valid) {
       const email = this.email.value;
       const password = this.password.value;
-      this.authService.login(email, password).pipe(
-        tap(() => this.router.navigate(['/']))
-      ).subscribe()
+      this.authService.login(email, password).pipe(first()).subscribe({
+        next: () => {    
+            this.router.navigate(['/home']);
+        },
+        error: error => {
+            console.log(error)
+        }
+    })
     }
   }
 

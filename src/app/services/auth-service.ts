@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,15 +12,27 @@ import {
 } from 'rxjs';
 import { User } from 'src/app/_model/user';
 import { environment } from 'src/environments/environment';
-import { ILoginResponse } from '../login-response.interface';
-import { IUser } from '../user.interface';
+import { IUser } from '../components/auth/user.interface';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<User | null>;
-  public user: Observable<User | null>;
+  private userSubject = new BehaviorSubject<User>(<User>{
+    id: '',
+    role: null,
+    access_token: '',
+  });
+  get user(): Observable<User> {
+    return this.userSubject.asObservable();
+  }
+  get userValue(): User {
+    return this.userSubject.getValue();
+  }
 
   private BASE_URL = environment.API_URL;
 
@@ -28,24 +40,7 @@ export class AuthService {
     private router: Router,
     private http: HttpClient,
     private snackbar: MatSnackBar
-  ) {
-    const userInLocalStorage = localStorage.getItem('user');
-    if (userInLocalStorage) {
-      this.userSubject = new BehaviorSubject<User | null>(
-        JSON.parse(userInLocalStorage)
-      );
-      this.user = this.userSubject.asObservable();
-    }
-  }
-
-  public get userValue(): User | null {
-    if (this.userSubject.value) {
-      return this.userSubject.value;
-    } else {
-      return null
-    }
-    
-  }
+  ) {}
 
   login(email: string, password: string) {
     return this.http
@@ -54,6 +49,7 @@ export class AuthService {
         // tap((res: any) => localStorage.setItem('token', res.access_token)),
         map((user) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
+          console.log(user);
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
           return user;
@@ -67,7 +63,7 @@ export class AuthService {
         ),
         catchError((e) => {
           console.log(e);
-          this.snackbar.open(`Login error: ${e.error.message}`, 'Close', {
+          this.snackbar.open(`Login error: ${e}`, 'Close', {
             duration: 5000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -79,17 +75,16 @@ export class AuthService {
 
   register(user: IUser) {
     return this.http.post<IUser>(`${this.BASE_URL}/auth/register`, user).pipe(
-      tap(
-        (registeredUser: IUser) =>
-          this.snackbar.open(
-            `User ${registeredUser.email} registered successfully`,
-            'Close',
-            {
-              duration: 2000,
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            }
-          ),
+      tap((registeredUser: IUser) =>
+        this.snackbar.open(
+          `User ${registeredUser.email} registered successfully`,
+          'Close',
+          {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          }
+        )
       ),
       catchError((e) => {
         this.snackbar.open(
@@ -106,10 +101,13 @@ export class AuthService {
     );
   }
 
-  async logout() {
-    await this.http.post(`${this.BASE_URL}/auth/logout`, {});
-    localStorage.removeItem('user');
-    this.userSubject.next(null);
-    this.router.navigate(['/login']);
+  logout() {
+    return this.http.post(`${this.BASE_URL}/auth/logout`, {}).subscribe(() => {
+      const emptyUser = new User('', null, '');
+      localStorage.removeItem('user');
+      // this.userSubject.next(null);
+      this.userSubject.next(emptyUser);
+      this.router.navigate(['/']);
+    });
   }
 }
