@@ -1,7 +1,5 @@
 <mat-card-title>User Profile</mat-card-title>
 
-
-
 <form class="view-profile-container">
   <mat-form-field class="view-info-one-col" appearance="fill">
     <mat-label>Email</mat-label>
@@ -29,29 +27,29 @@
   <table class="view-info-two-col" cellspacing="8">
     <tr>
       <td>
-        
-
-        <mat-form-field class="view-info-two-col" appearance="fill">
+        <!-- <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>Gender</mat-label>
-          <mat-select [(value)]="selectedGender" >
+          <mat-select [(value)]="selectedGender" placeholder="{{user.gender}}" >
             <mat-option *ngFor="let gender of genderOptions" [value]="gender.value">
               {{ gender.viewValue }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
-        
+        <mat-form-field class="view-info-two-col" appearance="fill">
+          <mat-label>Gender</mat-label>
+          <input matInput disabled value="{{ user.gender }}" />
+        </mat-form-field>
       </td>
 
       <td>
         <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>Birthday</mat-label>
-          <input matInput disabled value="{{ user.dateOfBirth }}" type="date" />
+          <input matInput disabled value="{{ user.dateOfBirth }}" />
         </mat-form-field>
       </td>
     </tr>
   </table>
 </form>
-
 
 <!-- <p>profile view</p> -->

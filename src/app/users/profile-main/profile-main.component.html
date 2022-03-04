@@ -2,54 +2,6 @@
 
 <app-header></app-header>
 <div class="matero-content">
-  <!-- <mat-grid-list cols="4" rowHeight="500px">
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <mat-card class="user-info-container">
-        <div class="user-avatar-container">
-          <div mat-card-avatar class="user-avatar"></div>
-        </div>
-
-        <div class="user-title-container">
-          <div class="matero-row">
-            <mat-card-title
-              >{{ user.firstname }}&nbsp;{{ user.lastname }}</mat-card-title
-            >
-            <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
-          </div>
-        </div>
-      </mat-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <mat-card class="user-info">
-        <div *ngIf="isOpenEdit">
-          <edit-profile></edit-profile>
-        </div>
-
-        <div *ngIf="!isOpenEdit">
-          <profile-view-details [user]="user"></profile-view-details>
-        </div>
-
-        <table class="action-buttons" cellspacing="10">
-          <tr>
-            <td>
-              <button mat-stroked-button color="primary" (click)="onPress()">
-                <span *ngIf="!isOpenEdit">Update Profile</span>
-
-                <span *ngIf="isOpenEdit">Save Changes</span>
-              </button>
-            </td>
-            <td>
-              <button *ngIf="!isOpenEdit" mat-stroked-button color="primary">
-                <span>Change Password</span>
-              </button>
-            </td>
-          </tr>
-        </table>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list> -->
-
   <div fxLayout="row wrap" class="matero-row">
     <div
       class="matero-col user-view-card"
@@ -81,8 +33,10 @@
       fxflex.gt-md="75"
     >
       <mat-card class="user-info">
-        <div *ngIf="isOpenEdit">
-          <edit-profile></edit-profile>
+
+        
+        <div [style.display]="isOpenEdit ? 'block' : 'none'">
+          <edit-profile  [user]="user" ></edit-profile>
         </div>
 
         <div *ngIf="!isOpenEdit">
@@ -92,10 +46,9 @@
         <table class="action-buttons" cellspacing="10">
           <tr>
             <td>
-              <button mat-stroked-button color="primary" (click)="onPress()">
-                <span *ngIf="!isOpenEdit">Update Profile</span>
-
-                <span *ngIf="isOpenEdit">Save Changes</span>
+              <button *ngIf="!isOpenEdit" mat-stroked-button color="primary" (click)="onPress()">
+                <span >Update Profile</span>
+                <!-- <span *ngIf="isOpenEdit">Save Changes</span> -->
               </button>
             </td>
             <td>

@@ -1,11 +1,17 @@
-.edit-profile-container {
+.input-field-container{
   width: 100%;
-  padding-top: 16px;
-  .edit-info-one-col {
-    width: 100%;
-    padding: 0 8px 0 8px;
-  }
-  .edit-info-two-col {
-    width: 100%;
-  }
+  padding: 12px 0 12px 0;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container > * {
+  width: 100%;
+}
+
+.action-buttons{
+  display: flex;
+  flex-direction: row-reverse;
 }

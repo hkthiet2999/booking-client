@@ -6,6 +6,7 @@ import { ProfileMainComponent } from './profile-main/profile-main.component';
 import { ProfileViewDetailsComponent } from './components/profile-view-details/profile-view-details.component';
 import { EditProfileComponent } from './components/profile-edit/profile-edit.component';
 import { MaterialModule } from 'app/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { MaterialModule } from 'app/material.module';
     CommonModule,
     FlexLayoutModule,
     MaterialModule,
-    CommonComponentsModule
+    CommonComponentsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ProfileMainComponent

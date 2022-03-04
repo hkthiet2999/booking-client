@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { CommonComponentsModule } from './common/common-components.module';
 import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MaterialModule,
     UsersModule,
     CommonComponentsModule,
+    HttpClientModule
 
   ],
   providers: [],
