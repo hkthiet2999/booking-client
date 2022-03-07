@@ -1,0 +1,42 @@
+<!-- <div class="user-avatar-container">
+    <div mat-card-avatar class="user-avatar"></div>
+</div> -->
+
+<div class="user-avatar-container">
+  <div mat-card-avatar class="user-avatar">
+    <label class="hoverable">
+      <img
+        [src]="
+          user.avatarUrl
+            ? user.avatarUrl
+            : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
+        "
+      />
+      <div class="hover-text">
+        <button
+          mat-button
+          color="warn"
+          (click)="onClick()"
+          (change)="imagePreview($event)"
+        >
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+      </div>
+      <div class="background"></div>
+      <br />
+
+      <div [style.display]="isSave ? 'block' : 'none'">
+        <button (click)="onSave()">Save</button>
+      </div>
+    </label>
+    <br />
+    <input
+      type="file"
+      #fileUpload
+      id="fileUpload"
+      name="fileUpload"
+      accept="image/*"
+      style="display: none"
+    />
+  </div>
+</div>

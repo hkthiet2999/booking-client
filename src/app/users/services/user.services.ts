@@ -36,8 +36,20 @@ export class UserService {
 
   updateUser(id: any, user: any) {
     console.log('user', user);
-    return this.http.put<any>(`${this.domain}/users/${id}`, user,         {
+    return this.http.put<any>(`${this.domain}/users/${id}`, user, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
+
+  updateAvatar(formData: FormData, id: string) {
+    return this.http.patch<any>(
+      `${this.domain}/users/avatar/upload/${id}`,
+      formData,
+      {
+        headers: new HttpHeaders()
+          .set("Accept", "application/json")          
+      }
+    );
+  }
+
 }

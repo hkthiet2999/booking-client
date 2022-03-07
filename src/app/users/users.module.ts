@@ -7,6 +7,7 @@ import { ProfileViewDetailsComponent } from './components/profile-view-details/p
 import { EditProfileComponent } from './components/profile-edit/profile-edit.component';
 import { MaterialModule } from 'app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 
 
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProfileMainComponent,
     ProfileViewDetailsComponent,
     EditProfileComponent,
+    AvatarComponent,
   ],
   imports: [
     CommonModule,
