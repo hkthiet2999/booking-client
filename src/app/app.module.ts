@@ -10,11 +10,14 @@ import { CommonComponentsModule } from './common/common-components.module';
 import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { HttpClientModule } from '@angular/common/http';
+import { AdminModule } from './admin/admin.module';
+import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserLayoutComponent
+    UserLayoutComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     UsersModule,
     CommonComponentsModule,
-    HttpClientModule
+    HttpClientModule,
+    AdminModule
 
   ],
   providers: [],
