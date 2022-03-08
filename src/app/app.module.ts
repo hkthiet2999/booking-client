@@ -54,7 +54,11 @@ import { HomeComponent } from './components/home/home.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AdminComponent } from './components/admin/admin.component';
-import { AuthService } from './services/auth-service';
+import { NavbarComponent } from './sharepage/navbar/navbar.component';
+import { FooterComponent } from './sharepage/footer/footer.component';
+import { RoommenuComponent } from './components/roommenu/roommenu.component';
+import { BookingpageComponent } from './components/bookingpage/bookingpage.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -62,7 +66,11 @@ import { AuthService } from './services/auth-service';
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    NavbarComponent,
+    FooterComponent,
+    RoommenuComponent,
+    BookingpageComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +121,7 @@ import { AuthService } from './services/auth-service';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    MatFormFieldModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
