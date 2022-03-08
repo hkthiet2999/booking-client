@@ -1,4 +1,6 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
+import { CreateUserComponent } from '../components/create-user/create-user.component';
 
 @Component({
   selector: 'app-user-management',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserManagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  onClickCreateUser(){
+    const dialogRef = this.dialog.open(CreateUserComponent, {
+      height: '35vw',
+      width: '60vw',
+    })
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+  }
 }

@@ -8,6 +8,8 @@ import { CommonComponentsModule } from 'app/common/common-components.module';
 // import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { UserDialogComponent } from './components/user-dialog/user-dialog.compon
     DashboardComponent,
     UsersTableComponent,
     UserDialogComponent,
+    CreateUserComponent,
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     MaterialModule,
     CommonComponentsModule,
+    ReactiveFormsModule
   ],
   exports: [UserManagementComponent, DashboardComponent, UsersTableComponent],
 })
