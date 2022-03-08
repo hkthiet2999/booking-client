@@ -1,0 +1,149 @@
+<h2 mat-dialog-title>User Details</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="row user-dialog-container">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="user-avatar-container">
+              <div mat-card-avatar class="user-avatar">
+                <img
+                  [src]="
+                    user.avatarUrl
+                      ? user.avatarUrl
+                      : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
+                  "
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="user.id">
+            <mat-divider></mat-divider>
+            <div mat-subheader>User ID</div>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon>info</mat-icon>
+                <div mat-line>
+                  <p>{{ user.id }}</p>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <mat-list>
+            <!-- <div *ngIf="user.id">
+              <div mat-subheader>User ID</div>
+              <mat-list-item>
+                <mat-icon>info</mat-icon>
+                <div mat-line>
+                  <p>{{ user.id }}</p>
+                </div>
+              </mat-list-item>
+            </div> -->
+
+            <div *ngIf="user.email">
+              <mat-divider></mat-divider>
+              <div mat-subheader>Email</div>
+              <mat-list-item>
+                <mat-icon> email</mat-icon>
+                <div mat-line>
+                  <p>{{ user.email }}</p>
+                </div>
+              </mat-list-item>
+            </div>
+
+            <div *ngIf="user.firstname">
+              <mat-divider></mat-divider>
+              <div mat-subheader>Firstname</div>
+              <mat-list-item>
+                <mat-icon>account_box</mat-icon>
+                <div mat-line>
+                  <p>{{ user.firstname }}</p>
+                </div>
+              </mat-list-item>
+            </div>
+
+            <div *ngIf="user.lastname">
+              <mat-divider></mat-divider>
+              <div mat-subheader>Lastname</div>
+              <mat-list-item>
+                <mat-icon>perm_contact_calendar</mat-icon>
+                <div mat-line>
+                  <p>{{ user.lastname }}</p>
+                </div>
+              </mat-list-item>
+            </div>
+
+            <div *ngIf="user.gender">
+              <mat-divider></mat-divider>
+              <div mat-subheader>Gender</div>
+              <mat-list-item>
+                <mat-icon>face</mat-icon>
+                <div mat-line>
+                  <p>{{ user.gender }}</p>
+                </div>
+              </mat-list-item>
+            </div>
+
+            <div *ngIf="user.dateOfBirth">
+              <mat-divider></mat-divider>
+              <div mat-subheader>Birthday</div>
+              <mat-list-item>
+                <mat-icon>date_range</mat-icon>
+                <div mat-line>
+                  <p>{{ user.dateOfBirth | date }}</p>
+                </div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <mat-accordion>
+    <mat-expansion-panel
+      hideToggle
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <button
+            *ngIf="!panelOpenState; else showCancle"
+            mat-button
+            color="warn"
+          >
+            Delete User
+          </button>
+          <ng-template #showCancle>
+            <button mat-button color="primary">Cancle</button>
+          </ng-template>
+        </mat-panel-title>
+        <mat-panel-description>
+          <button mat-button mat-dialog-close color="primary">Exit</button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <button
+        style="float: left"
+        mat-button
+        color="warn"
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        matTooltip="Are you sure?"
+        (click)="onConfirmDelete(user.id)"
+      >
+        Yes
+      </button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-dialog-actions>

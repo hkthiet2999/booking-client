@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 12%;
+}
+
+.mini-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50rem;
+}
+
+.mat-column-no {
+  width: 10%;
+}
+
+.mat-row:hover {
+  background-color: rgba(56, 54, 54, 0.3);
+}

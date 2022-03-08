@@ -1,0 +1,75 @@
+<div class="admin-dashboard-container">
+  <div class="card" style="margin-bottom: 16px">
+    <div class="card-body">
+      <h2><b>Dashboard</b></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-3">
+        
+        <div class="row g-0">
+          <div class="col-md-6">
+            <img
+              src="https://www.hotelminder.com/images/analytics-chart-numbers.png"
+              alt="..."
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <p class="card-text revenue-p">Revenue</p>
+
+              <h1>$12000</h1>
+              <p class="card-category">
+                <span class="text-success"
+                  ><i class="fa fa-long-arrow-up"></i> 55%
+                </span>
+                increase in today sales.
+              </p>
+
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="material-icons">access_time</i> Last updated 3 mins
+                  ago</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card bg-dark text-white">
+        <img
+          src="assets/images/hotel-services.jpg"
+          class="card-img"
+          alt="..."
+        />
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card" (click)="navigate()">
+        <div
+          class="bg-image hover-overlay ripple shadow-1-strong rounded"
+          data-mdb-ripple-color="light"
+        >
+          <img
+            src="assets/images/users-management.png"
+            class="card-img-top"
+            alt="..."
+          />
+            <div
+              class="mask"
+              style="background-color: rgba(251, 251, 251, 0.2)"
+            ></div>
+        </div>
+        <div class="card-body" style="text-align: center">
+          <p class="card-text user-managment-p">User Management</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

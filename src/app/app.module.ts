@@ -12,12 +12,12 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { HttpClientModule } from '@angular/common/http';
 import { AdminModule } from './admin/admin.module';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     UserLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,8 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.
     UsersModule,
     CommonComponentsModule,
     HttpClientModule,
-    AdminModule
+    AdminModule,
+
 
   ],
   providers: [],
