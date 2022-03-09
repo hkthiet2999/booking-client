@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service';
-import { BookingService } from 'src/app/services/booking.service';
 import { FakeRoomService } from 'src/app/services/fake-room.service';
 import { BookingConnectionService } from 'src/app/services/httpConnection.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingConfirmDialog } from '../BookingComponents/booking-confirm-dialog/booking-confirm-dialog';
 @Component({
   selector: 'app-bookingpage',
   templateUrl: './bookingpage.component.html',
@@ -18,17 +19,17 @@ export class BookingpageComponent implements OnInit {
   response: boolean = false;
   SelectedRoomTimesheet: Data[] = [];
   dateRange = new FormGroup({
-    start: new FormControl(new Date(), Validators.required),
-    end: new FormControl(new Date(), Validators.required),
+    start: new FormControl('',Validators.required),
+    end: new FormControl('',Validators.required),
   });
 
   constructor(
     private param: ActivatedRoute,
     private roomService: FakeRoomService,
     private conn: BookingConnectionService,
-    private authService: AuthService,
     private cdref: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +80,25 @@ export class BookingpageComponent implements OnInit {
     return false;
   }
 
+  openDialog(){
+    
+    const days=(this.dateRange.value.end -this.dateRange.value.start)/(1000 * 60 * 60 * 24)
+    const dialogRef = this.dialog.open(BookingConfirmDialog, {
+      width: '750px',
+      data: {
+             startdate:this.dateRange.value.start,
+             enddate:this.dateRange.value.end,
+             roomid:this.roomId,
+             pricePerDay:this.roomData[0].price,
+             days:days,
+             genericRoomData:this.roomData[0]}
+    });
+
+    dialogRef.afterClosed().subscribe(result=>{if(result){
+      this.submitBooking()
+    }})
+  }
+
   submitBooking() {
     this.conn
       .createBooking(
@@ -89,9 +109,8 @@ export class BookingpageComponent implements OnInit {
       )
       .subscribe((data) =>
         this.conn.getRoomTimesheet(this.roomId).subscribe((data) => {
-          console.log(data);
           this.response = true;
-          setTimeout(() => this.router.navigate(['/']), 1000);
+          setTimeout(() => this.router.navigate(['/']), 2000);
         })
       );
   }
