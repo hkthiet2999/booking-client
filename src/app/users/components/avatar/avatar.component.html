@@ -6,12 +6,17 @@
   <div mat-card-avatar class="user-avatar">
     <label class="hoverable">
       <img
+        *ngIf="!isPreview; else preview"
         [src]="
           user.avatarUrl
             ? user.avatarUrl
             : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
         "
       />
+
+      <ng-template #preview>
+        <img [src]="imgSrc">
+      </ng-template>
       <div class="hover-text">
         <button
           mat-button
@@ -23,13 +28,8 @@
         </button>
       </div>
       <div class="background"></div>
-      <br />
-
-      <div [style.display]="isSave ? 'block' : 'none'">
-        <button (click)="onSave()">Save</button>
-      </div>
     </label>
-    <br />
+  
     <input
       type="file"
       #fileUpload
@@ -40,3 +40,8 @@
     />
   </div>
 </div>
+<br />
+<div [style.display]="isSave ? 'block' : 'none'">
+  <button (click)="onSave()">Save</button>
+</div>
+
