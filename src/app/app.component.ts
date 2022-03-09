@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { LoadingService } from './common/services/loading.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   title = 'booking-client';
+
+  constructor(
+    public loadingService: LoadingService
+  ){}
 }

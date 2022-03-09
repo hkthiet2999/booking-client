@@ -1,3 +1,6 @@
-<!-- no contents  -->
+<!-- <ng-container *ngIf="loadingService.isLoading$ | async">
+    <i class="loading"></i>
+  </ng-container> -->
 
+<p *ngIf="loadingService.isLoading | async">Loading!</p>
 <router-outlet></router-outlet>

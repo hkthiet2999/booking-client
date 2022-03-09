@@ -9,9 +9,11 @@ import { UsersModule } from './users/users.module';
 import { CommonComponentsModule } from './common/common-components.module';
 import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminModule } from './admin/admin.module';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.component';
+import { LoadingInterceptor } from './common/interceptors/loading.interceptor';
+import { LoadingService } from './common/services/loading.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,7 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.
 
 
   ],
-  providers: [],
+  providers: [LoadingService,{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
