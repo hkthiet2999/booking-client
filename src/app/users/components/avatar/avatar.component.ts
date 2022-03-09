@@ -29,7 +29,7 @@ export class AvatarComponent implements OnInit {
   
 
   imagePath: any;
-  imgURL: any;
+  imgSrc: any;
 
   file: File = {
     data: null,
@@ -47,6 +47,7 @@ export class AvatarComponent implements OnInit {
     
 
   }
+  isPreview = false
   isSave = false;
   onSave() {
     // this.isSave = !this.isSave;
@@ -71,13 +72,15 @@ export class AvatarComponent implements OnInit {
       // this.user.avatarUrl = this.file.data.fil
       // console.log(this.file.data);
 
-      // var reader = new FileReader();
-      // this.imagePath = this.file.data;
-      // reader.readAsDataURL(this.file.data); 
-      // reader.onload = (_event) => { 
-      //   this.imgURL = reader.result; 
-      // }
-      // console.log(this.imgURL);
+      let reader = new FileReader();
+
+      reader.readAsDataURL(this.file.data); 
+      reader.onload = (_event) => { 
+        this.imgSrc = reader.result; 
+      }
+
+      this.isPreview = !this.isPreview
+      console.log(this.imgSrc);
 
       // this.uploadFile();
     };
@@ -87,6 +90,7 @@ export class AvatarComponent implements OnInit {
     const formData = new FormData();
     // console.log('file:', this.file.data);
     
+
     await formData.append('image', this.file.data);
 
 
@@ -98,7 +102,20 @@ export class AvatarComponent implements OnInit {
         console.log(res);
       }
     );
-
+    // .pipe(
+    //   map((event: HttpEvent<T>) => {
+    //     switch (event.type) {
+    //       case HttpEventType.UploadProgress:
+    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
+    //         break;
+    //       case HttpEventType.Response:
+    //         return event;
+    //     }
+    //   }),
+    //   catchError((error: HttpErrorResponse) => {
+    //     this.file.inProgress = false;
+    //     return of('Upload failed');
+    //   })).subscribe()
   }
 
   imagePreview(e: any) {
