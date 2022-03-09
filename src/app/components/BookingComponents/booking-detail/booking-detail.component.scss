@@ -1,18 +1,18 @@
 * {
-    box-sizing: border-box;
-  }
-
-.contentDetail{
-    min-width: 120px;
-    padding-left:  12px
+  box-sizing: border-box;
 }
 
-h1{
-  font-family: 'Brush Script MT', cursive;
+.contentDetail {
+  min-width: 120px;
+  padding-left: 12px;
+}
+
+h1 {
+  font-family: "Brush Script MT", cursive;
   color: red;
   text-align: center;
 }
 
-span.field{
+span.field {
   float: right;
 }

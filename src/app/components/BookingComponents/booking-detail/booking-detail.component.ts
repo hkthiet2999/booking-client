@@ -5,17 +5,15 @@ import { Booking } from 'src/app/_model/booking.model';
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.scss']
+  styleUrls: ['./booking-detail.component.scss'],
 })
 export class BookingDetailComponent implements OnInit {
-  @Input() bookingDetails:Booking 
-  constructor(private bookingService:BookingService) { }
+  @Input() bookingDetails: Booking;
+  constructor(private bookingService: BookingService) {}
 
   ngOnInit(): void {
-    this.bookingService.getCurrentBooking.subscribe(
-      bookingData => {this.bookingDetails=bookingData; }
-    )
+    this.bookingService.getCurrentBooking.subscribe((bookingData) => {
+      this.bookingDetails = bookingData;
+    });
   }
-  
-  
 }

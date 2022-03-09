@@ -10,56 +10,33 @@
 
     <div class="col-lg-6 col-12 form-container">
       <h1>Enter Your Details</h1>
-      <form [formGroup]="formBooking">
-        <mat-form-field>
-          <input
-            formControlName="checkinDate"
-            name="checkinDate"
-            matInput
-            [matDatepicker]="picker1"
-            placeholder="Choose a check-in date"
-          />
+      <form [formGroup]="dateRange">
+        <mat-form-field class="example-form-field" appearance="fill">
+          <mat-label>Date Range</mat-label>
+          <mat-date-range-input
+            [dateFilter]="filter"
+            [rangePicker]="dateRangePicker"
+            [comparisonStart]="dateRange.value.start"
+            [comparisonEnd]="dateRange.value.end"
+          >
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
           <mat-datepicker-toggle
             matSuffix
-            [for]="picker1"
+            [for]="dateRangePicker"
           ></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+          <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
         </mat-form-field>
 
-        <mat-form-field>
-            <input
-              formControlName="checkoutDate"
-              name="checkoutDate"
-              matInput
-              [matDatepicker]="picker2"
-              placeholder="Choose a check-out date"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker2"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
-
-        <!-- <mat-form-field>
-          <input
-            formControlName="name"
-            name="name"
-            matInput
-            placeholder="Name"
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            formControlName="email"
-            name="email"
-            matInput
-            placeholder="Email"
-            type="email"
-          />
-        </mat-form-field> -->
-
-        <button class="btn btn-md btn-dark mt-3">Book Room</button>
+        <button class="btn btn-md btn-dark mt-3" [disabled]="response" (click)="submitBooking()">
+          Book Room
+        </button>
+        <div *ngIf="response">Booking confirmed, redirecting to home page</div>
       </form>
     </div>
   </div>

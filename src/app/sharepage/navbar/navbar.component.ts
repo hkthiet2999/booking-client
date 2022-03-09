@@ -15,8 +15,8 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.user.subscribe((x) => (this.user = x));
   }
 
-  ngOnInit(): void { }
-  
+  ngOnInit(): void {}
+
   get isAdmin() {
     return this.user && this.user.role === Role.Admin;
   }
