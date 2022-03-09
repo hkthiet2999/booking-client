@@ -1,52 +1,31 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpErrorResponse,
-  HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
-// import { Observable } from 'rxjs/Observable';
+import { finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { LoadingService } from '../services/loading.service';
-import { Observable } from 'rxjs';
-// import { loadingService } from './loader.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  private requests: HttpRequest<any>[] = [];
+  private totalRequests = 0;
 
   constructor(private loadingService: LoadingService) { }
 
-  removeRequest(req: HttpRequest<any>) {
-    const i = this.requests.indexOf(req);
-    if (i >= 0) {
-      this.requests.splice(i, 1);
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
+    this.totalRequests++;
+    this.loadingService.setLoading(true);
 
-    }
-    console.log(i, this.requests.length);
-    this.loadingService.isLoading.next(this.requests.length > 0);
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.requests.push(req);
-    this.loadingService.isLoading.next(true);
-    return Observable.create( (observer: any) => {
-      const subscription = next.handle(req)
-        .subscribe(
-        event => {
-          if (event instanceof HttpResponse) {
-            this.removeRequest(req);
-            observer.next(event);
-          }
-        },
-        err => { this.removeRequest(req); observer.error(err); },
-        () => { this.removeRequest(req); observer.complete(); });
-      // teardown logic in case of cancelled requests
-      return () => {
-        this.removeRequest(req);
-        subscription.unsubscribe();
-      };
-    });
+    return next.handle(request).pipe(
+      finalize(() => {
+        this.totalRequests--;
+        if (this.totalRequests === 0) {
+          this.loadingService.setLoading(false);
+        }
+      })
+    );
   }
 }
