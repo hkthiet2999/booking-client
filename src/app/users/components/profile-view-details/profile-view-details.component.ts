@@ -11,6 +11,4 @@ export class ProfileViewDetailsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
-  
 }

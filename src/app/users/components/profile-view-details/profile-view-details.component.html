@@ -3,7 +3,12 @@
 <form class="view-profile-container">
   <mat-form-field class="view-info-one-col" appearance="fill">
     <mat-label>Email</mat-label>
-    <input matInput disabled value="{{ user.email }}" />
+    <input
+      matInput
+      disabled
+      value="{{ user.email }}"
+      style="color: #000000de"
+    />
   </mat-form-field>
 
   <table class="view-info-two-col" cellspacing="8">
@@ -11,14 +16,24 @@
       <td>
         <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>First name</mat-label>
-          <input matInput disabled value="{{ user.firstname }}" />
+          <input
+            matInput
+            disabled
+            value="{{ user.firstname }}"
+            style="color: #000000de"
+          />
         </mat-form-field>
       </td>
 
       <td>
         <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>Last name</mat-label>
-          <input matInput disabled value="{{ user.lastname }}" />
+          <input
+            matInput
+            disabled
+            value="{{ user.lastname }}"
+            style="color: #000000de"
+          />
         </mat-form-field>
       </td>
     </tr>
@@ -27,29 +42,28 @@
   <table class="view-info-two-col" cellspacing="8">
     <tr>
       <td>
-        <!-- <mat-form-field class="view-info-two-col" appearance="fill">
-          <mat-label>Gender</mat-label>
-          <mat-select [(value)]="selectedGender" placeholder="{{user.gender}}" >
-            <mat-option *ngFor="let gender of genderOptions" [value]="gender.value">
-              {{ gender.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
         <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>Gender</mat-label>
-          <input matInput disabled value="{{ user.gender }}" />
+          <input
+            matInput
+            disabled
+            value="{{ user.gender }}"
+            style="color: #000000de"
+          />
         </mat-form-field>
       </td>
 
       <td>
         <mat-form-field class="view-info-two-col" appearance="fill">
           <mat-label>Birthday</mat-label>
-          <input matInput disabled value="{{ user.dateOfBirth }}" />
+          <input
+            matInput
+            disabled
+            value="{{ user.dateOfBirth }}"
+            style="color: #000000de"
+          />
         </mat-form-field>
       </td>
     </tr>
   </table>
 </form>
-
-<!-- <p>profile view</p> -->

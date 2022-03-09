@@ -87,7 +87,6 @@ export class AvatarComponent implements OnInit {
     const formData = new FormData();
     // console.log('file:', this.file.data);
     
-
     await formData.append('image', this.file.data);
 
 
@@ -99,20 +98,7 @@ export class AvatarComponent implements OnInit {
         console.log(res);
       }
     );
-    // .pipe(
-    //   map((event: HttpEvent<T>) => {
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
-    //         break;
-    //       case HttpEventType.Response:
-    //         return event;
-    //     }
-    //   }),
-    //   catchError((error: HttpErrorResponse) => {
-    //     this.file.inProgress = false;
-    //     return of('Upload failed');
-    //   })).subscribe()
+
   }
 
   imagePreview(e: any) {

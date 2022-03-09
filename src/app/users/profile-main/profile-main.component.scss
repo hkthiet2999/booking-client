@@ -45,14 +45,7 @@
   padding: $gutter;
 }
 
-// .badge {
-//   @include badge();
-// }
-
-// .scrollbar-thin {
-//   @include scrollbar-thin();
-// }
-
-// .scrollbar-none {
-//   @include scrollbar-none();
-// }
+.mat-card{
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}

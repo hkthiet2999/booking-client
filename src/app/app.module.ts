@@ -31,8 +31,6 @@ import { LoadingService } from './common/services/loading.service';
     CommonComponentsModule,
     HttpClientModule,
     AdminModule,
-
-
   ],
   providers: [LoadingService,{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent]

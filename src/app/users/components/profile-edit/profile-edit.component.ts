@@ -16,18 +16,7 @@ export class EditProfileComponent implements OnInit {
   @Input() user: any;
 
   selectedGender: string | undefined;
-
-  updateForm!: FormGroup;
-
   updatedUserId!: string;
-
-  // updateForm = this.formBuilder.group({
-  //   firstname: '',
-  //   lastname: '',
-  //   gender: '',
-  //   dayOfBirth: ''
-  // });
-
   form!: FormGroup
 
   constructor(

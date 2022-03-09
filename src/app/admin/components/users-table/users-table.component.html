@@ -1,3 +1,5 @@
+<h1>Users Management</h1>
+
 <mat-form-field appearance="standard">
   <mat-label>Search...</mat-label>
   <input
@@ -8,7 +10,7 @@
   />
 </mat-form-field>
 
-<div class="mat-elevation-z8">
+<div class="users-table">
   <table mat-table [dataSource]="dataSource" matSort>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
