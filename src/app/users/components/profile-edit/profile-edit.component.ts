@@ -19,6 +19,8 @@ export class EditProfileComponent implements OnInit {
 
   updateForm!: FormGroup;
 
+  updatedUserId!: string;
+
   // updateForm = this.formBuilder.group({
   //   firstname: '',
   //   lastname: '',
@@ -58,14 +60,19 @@ export class EditProfileComponent implements OnInit {
     { value: 'other', viewValue: 'Other' },
   ];
 
-  async updateUserInfo(form: { value: string }) {
-    await this.userService
+  updateUserInfo(form: { value: string }) {
+   this.userService
       .updateUser(
         'd8679948-57c4-4d3e-a078-0aae6aa3f73a',
         JSON.stringify(form.value),
       )
-      .subscribe();
+      .subscribe((user) => {
+        console.log('Data subscribe:', user);
+        this.updatedUserId = user.id;
+        return this.userService.findUserBy(this.updatedUserId)
+      });
 
-    window.location.reload();
+    
+    // window.location.reload();
   }
 }

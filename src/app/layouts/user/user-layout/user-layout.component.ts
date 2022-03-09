@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-layout.component.scss']
 })
 export class UserLayoutComponent implements OnInit {
-
+  isProgress = false;
   constructor() { }
 
   ngOnInit(): void {
