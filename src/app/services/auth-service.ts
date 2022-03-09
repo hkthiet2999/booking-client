@@ -41,7 +41,7 @@ export class AuthService {
     private http: HttpClient,
     private snackbar: MatSnackBar
   ) {}
-
+  
   login(email: string, password: string) {
     return this.http
       .post<User>(`${this.BASE_URL}/auth/login`, { email, password })
@@ -110,4 +110,5 @@ export class AuthService {
       this.router.navigate(['/']);
     });
   }
+
 }

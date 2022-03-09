@@ -1,0 +1,21 @@
+
+
+<div>
+    <div *ngIf="bookingDetails; then list else empty"></div>
+    <!-- TEMPLATES -->
+   <ng-template #list>
+       <div class="contentDetail">
+            
+            <mat-selection-list  [multiple]="false">
+                <mat-list-option *ngFor="let field of bookingDetails | keyvalue ">
+                    
+                    <div mat-line>{{field.key}}:   <span class="field">{{field.value}}</span></div>
+    
+                    <mat-divider></mat-divider>
+                </mat-list-option>
+              </mat-selection-list>
+       </div>
+       
+   </ng-template>
+   <ng-template #empty> No booking chosen</ng-template>
+</div>

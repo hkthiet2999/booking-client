@@ -1,0 +1,68 @@
+    <div class="tableContainer">
+      <mat-table [dataSource]="bookingData" matSort matSort (matSortChange)="sortData($event)">
+
+        <ng-container  matColumnDef="bookingid">
+          <th mat-header-cell *matHeaderCellDef> UUID </th>
+          <td mat-cell *matCellDef="let element"> {{element.uuid }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="userid">
+          <th mat-header-cell *matHeaderCellDef> UserID </th>
+          <td mat-cell *matCellDef="let element"> {{element.userid}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="roomid">
+        <th mat-header-cell *matHeaderCellDef> RoomID </th>
+        <td mat-cell *matCellDef="let element"> {{element.roomid}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="check_in_date" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="cInDate"> Check in Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.check_in_date|date}} </td>
+      </ng-container>
+    
+    
+      <ng-container matColumnDef="check_out_date" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="cOutDate"> Checkout Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.created_date|date}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="action">
+        <tr><th mat-header-cell *matHeaderCellDef> Action </th></tr>
+        <tr>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" title="Edit Booking"(click)="$event.stopPropagation();onModifyActionSelected(row)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="primary" title="Remove Booking"(click)="$event.stopPropagation();onDeleteActionSelected(row)"><mat-icon>delete</mat-icon></button>
+          </td>
+        <tr>
+      </ng-container>
+      <!-- <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="expandRow"
+               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-position"> {{element.userid}} </div>
+              <div class="example-element-symbol"> {{element.roomid}} </div>
+              <div class="example-element-name"> {{element.check_in_date}} </div>
+              <div class="example-element-weight"> {{element.check_out_date}} </div>
+          </div>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns  ;sticky: true" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="onBookingSelected(row) " ></tr>
+        <!-- <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+            class="expandRow"
+            [class.expandRow]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr> -->
+        <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+
+      </mat-table>  
+      <mat-paginator #paginator [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page">
+    </mat-paginator>  
+    </div>
+  
+ 

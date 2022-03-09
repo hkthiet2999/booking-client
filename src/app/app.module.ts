@@ -59,6 +59,12 @@ import { FooterComponent } from './sharepage/footer/footer.component';
 import { RoommenuComponent } from './components/roommenu/roommenu.component';
 import { BookingpageComponent } from './components/bookingpage/bookingpage.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BookingSectionComponent } from './components/BookingComponents/booking-section/booking-section.component';
+import { BookingListComponent } from './components/BookingComponents/booking-list/booking-list.component';
+import { BookingDetailComponent } from './components/BookingComponents/booking-detail/booking-detail.component';
+import { BookingDialogueComponent } from './components/BookingComponents/booking-dialogue/booking-dialogue.component';
+import { BookingService } from './services/booking.service';
+import { BookingConnectionService } from './services/httpConnection.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +76,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NavbarComponent,
     FooterComponent,
     RoommenuComponent,
-    BookingpageComponent
+    BookingpageComponent,BookingSectionComponent,BookingListComponent,BookingDetailComponent,BookingDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +132,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    BookingService,BookingConnectionService
   ],
   bootstrap: [AppComponent],
 })

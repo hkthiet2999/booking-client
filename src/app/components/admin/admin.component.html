@@ -1,6 +1,16 @@
-<div class="card mt-4">
-    <h4 class="card-header">Admin</h4>
-    <div class="card-body">
-        <p>This page can be accessed <u>only by administrators</u>.</p>
-    </div>
+
+
+<div *ngIf="isAdmin; else NotAdminTemplate">
+    <app-booking-section></app-booking-section>>
 </div>
+
+
+<ng-template #NotAdminTemplate>
+    <div class="card mt-4">
+        <h4 class="card-header">Admin</h4>
+        <div class="card-body">
+            <p>This page can be accessed <u>only by administrators</u>.</p>
+        </div>
+    </div>
+</ng-template>
+
