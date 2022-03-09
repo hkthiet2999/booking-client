@@ -5,31 +5,27 @@
 <div class="user-avatar-container">
   <div mat-card-avatar class="user-avatar">
     <label class="hoverable">
-      <img
-        *ngIf="!isPreview; else preview"
-        [src]="
-          user.avatarUrl
-            ? user.avatarUrl
-            : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
-        "
-      />
+      <div [style.display]="!isPreview ? 'block' : 'none'">
+        <img
+          [src]="
+            user.avatarUrl
+              ? user.avatarUrl
+              : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
+          "
+        />
+      </div>
 
-      <ng-template #preview>
-        <img [src]="imgSrc">
-      </ng-template>
+      <div [style.display]="isPreview ? 'block' : 'none'">
+        <img [src]="imgSrc" />
+      </div>
       <div class="hover-text">
-        <button
-          mat-button
-          color="warn"
-          (click)="onClick()"
-          (change)="imagePreview($event)"
-        >
+        <button mat-button color="warn" (click)="onClick()">
           <mat-icon>cloud_upload</mat-icon>
         </button>
       </div>
       <div class="background"></div>
     </label>
-  
+
     <input
       type="file"
       #fileUpload
@@ -42,6 +38,12 @@
 </div>
 <br />
 <div [style.display]="isSave ? 'block' : 'none'">
-  <button (click)="onSave()">Save</button>
+  <button
+    type="button"
+    color="primary"
+    mdbWavesEffect
+    (click)="onSave()"
+  >
+    Save
+  </button>
 </div>
-

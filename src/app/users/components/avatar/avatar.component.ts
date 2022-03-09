@@ -1,16 +1,5 @@
 import { UserService } from './../../services/user.services';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  HttpEventType,
-  HttpEvent,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpClient
-} from '@angular/common/http';
-import { switchMap, tap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { environment } from 'environments/environment';
-
 export interface File {
   data: any;
   progress: number;
@@ -36,10 +25,9 @@ export class AvatarComponent implements OnInit {
     inProgress: false,
     progress: 0,
   };
-  private domain = environment.API_URL;
 
   constructor(private userService: UserService,
-    private http: HttpClient) {}
+) {}
 
   ngOnInit(
     
@@ -102,24 +90,7 @@ export class AvatarComponent implements OnInit {
         console.log(res);
       }
     );
-    // .pipe(
-    //   map((event: HttpEvent<T>) => {
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
-    //         break;
-    //       case HttpEventType.Response:
-    //         return event;
-    //     }
-    //   }),
-    //   catchError((error: HttpErrorResponse) => {
-    //     this.file.inProgress = false;
-    //     return of('Upload failed');
-    //   })).subscribe()
+
   }
 
-  imagePreview(e: any) {
-    
-    
-  }
 }

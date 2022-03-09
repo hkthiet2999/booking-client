@@ -22,17 +22,8 @@ export class ProfileMainComponent implements OnInit {
     public dialog: MatDialog,) {}
 
   ngOnInit() {
-    // this.user = {
-    //   id: '51702187-aaa',
-    //   email: 'harry.hoang@contemi.com',
-    //   firstname: 'Harry',
-    //   lastname: 'Hoang',
-    //   gender: 'male',
-    //   dateOfBirth: '',
-    //   avatarUrl: '',
-    //   role: 'user',
-    // };
 
+    console.log('In here 1');
     this.userService
       .findUserBy('d8679948-57c4-4d3e-a078-0aae6aa3f73a')
       .subscribe((data: any) => {
