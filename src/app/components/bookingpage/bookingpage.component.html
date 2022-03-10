@@ -1,0 +1,66 @@
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-lg-6" *ngIf="roomData">
+      <a routerLink="../../roommenu" class="btn btn-sm btn-dark mb-3">Back</a>
+      <img src="{{ roomData[0].images }}" width="100%" />
+      <h1 class="mt-3">{{ roomData[0].codeName }}</h1>
+      <p>isVacant: {{ roomData[0].isVacant }}</p>
+      <p>{{ roomData[0].price | currency: "USD" }}</p>
+    </div>
+
+    <div class="col-lg-6 col-12 form-container">
+      <h1>Enter Your Details</h1>
+      <form [formGroup]="formBooking">
+        <mat-form-field>
+          <input
+            formControlName="checkinDate"
+            name="checkinDate"
+            matInput
+            [matDatepicker]="picker1"
+            placeholder="Choose a check-in date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+              formControlName="checkoutDate"
+              name="checkoutDate"
+              matInput
+              [matDatepicker]="picker2"
+              placeholder="Choose a check-out date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+        <!-- <mat-form-field>
+          <input
+            formControlName="name"
+            name="name"
+            matInput
+            placeholder="Name"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            formControlName="email"
+            name="email"
+            matInput
+            placeholder="Email"
+            type="email"
+          />
+        </mat-form-field> -->
+
+        <button class="btn btn-md btn-dark mt-3">Book Room</button>
+      </form>
+    </div>
+  </div>
+</div>
