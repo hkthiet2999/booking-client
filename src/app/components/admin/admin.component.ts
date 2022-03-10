@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {
-    constructor() { }
+  tabIndex = 0;
+  constructor() {}
 
-    ngOnInit() {
-        
-    }
+  ngOnInit() {}
+  changeTab(e: any) {
+    this.tabIndex = e;
+    console.log(e, 'tab');
+  }
 }

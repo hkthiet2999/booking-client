@@ -1,0 +1,7 @@
+<div class="roomHeaderContainer">
+    <div class="roomSearchBar">
+        <input matInput #txtVal placeholder="Search any room" class="roomSearchArea" (keydown.enter)="keyDownSearchBar($event)"> 
+            <!-- <mat-icon matSuffix>search</mat-icon> -->
+      </div>
+    <button mat-raised-button color="warn" (click)="openDialog()">New room</button>
+</div>

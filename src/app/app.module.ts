@@ -59,6 +59,12 @@ import { FooterComponent } from './sharepage/footer/footer.component';
 import { RoommenuComponent } from './components/roommenu/roommenu.component';
 import { BookingpageComponent } from './components/bookingpage/bookingpage.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { RoomComponent } from './components/room/room.component';
+import { RoomHeaderComponent } from './components/room/room-header/room-header.component';
+import { RoomTableComponent } from './components/room/room-table/room-table.component';
+import { RoomImgCellComponent } from './components/room/room-img-cell/room-img-cell.component';
+import { DialogFormComponent } from './components/room/dialog-form/dialog-form.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +76,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NavbarComponent,
     FooterComponent,
     RoommenuComponent,
-    BookingpageComponent
+    BookingpageComponent,
+    RoomComponent,
+    RoomHeaderComponent,
+    RoomTableComponent,
+    RoomImgCellComponent,
+    DialogFormComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,7 +133,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

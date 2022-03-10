@@ -1,6 +1,8 @@
-<div class="card mt-4">
-    <h4 class="card-header">Admin</h4>
-    <div class="card-body">
-        <p>This page can be accessed <u>only by administrators</u>.</p>
+<div class="mt-4" style="display: flex;">
+    <app-sidenav (onChangeTab)="changeTab($event)"></app-sidenav>
+    <div *ngIf="tabIndex===0">hahahah</div>
+    <div  *ngIf="tabIndex===1">
+        <app-room></app-room>
     </div>
+    
 </div>

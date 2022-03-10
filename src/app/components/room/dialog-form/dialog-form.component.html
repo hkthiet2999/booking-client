@@ -1,0 +1,64 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="roomForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Room name</mat-label>
+            <input formControlName="codeName"  matInput placeholder="Ex: P.123" required>
+            <mat-icon matSuffix>code</mat-icon>
+            <mat-error *ngIf="roomForm.controls['codeName'].errors">Room name is <strong>required</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Room size</mat-label>
+            <mat-select formControlName="size" required>
+              <mat-option value="single">Single</mat-option>
+              <mat-option value="double">Double</mat-option>
+              <mat-option value="dormitory">Dormitory</mat-option>
+            </mat-select>
+            <mat-error *ngIf="roomForm.controls['size'].errors">Room size must <strong>be selected</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Room price</mat-label>
+            <input formControlName="price" matInput placeholder="Ex: 123"  type="number"  required>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-error *ngIf="roomForm.controls['price'].errors">Price must <strong>be declared</strong></mat-error>
+          </mat-form-field>
+    </form>
+        <div class="uploadImgArea">
+          <div *ngFor="let progressInfo of progressInfos">
+            <span>{{ progressInfo.fileName }}</span>
+            <mat-toolbar class="progress-bar">
+              <mat-progress-bar
+                color="accent"
+                [value]="progressInfo.value"
+              ></mat-progress-bar>
+              <span class="progress">{{ progressInfo.value }}%</span>
+            </mat-toolbar>
+          </div>
+          <input
+            type="file"
+            id="fileInput"
+            name="fileInput"
+            accept="image/*" multiple 
+            (change)="selectFiles($event)"
+            class="uploadInput"
+          />
+          <label for="fileInput">Choose some images <mat-icon>cloud_upload</mat-icon></label>
+          <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!selectedFiles"
+        (click)="uploadFiles()"
+        style="margin-left: 20px;"
+      >
+        Upload
+      </button>
+        </div>
+      <div class="previewUploadedArea">
+        <img *ngFor='let preview of previews' [src]="preview" class="previewImg" width="50">
+      </div>
+</div>
+<div mat-dialog-actions [align]="'end'">
+<button mat-raised-button color="warn" mat-dialog-close>Close</button>
+<button mat-raised-button color="primary" *ngIf="isCreate" (click)="addNewRoom()" [disabled]="!roomForm.valid" >Save</button>
+<button mat-raised-button color="primary" *ngIf="!isCreate" (click)="updateARoom()" [disabled]="isChange" >Update</button>
+</div>
