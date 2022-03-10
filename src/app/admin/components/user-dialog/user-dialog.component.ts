@@ -28,7 +28,7 @@ export class UserDialogComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.data.userId
     this.userService.findUserBy(this.userId).subscribe( (data: UserInterface) => {
-      this.user = data
+      this.user = data;
     })
   }
 

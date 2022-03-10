@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from '../components/profile-edit/profile-edit.component';
+import { AuthService } from 'app/services/auth-service';
 
 @Component({
   selector: 'app-profile-main',
@@ -18,14 +19,16 @@ export class ProfileMainComponent implements OnInit {
 
   user: any;
 
-  constructor(private userService: UserService,
+
+  constructor(private authService: AuthService, private userService: UserService,
     public dialog: MatDialog,) {}
 
   ngOnInit() {
+    this.user = this.authService.userValue;
 
-    console.log('In here 1');
+    console.log('Get User:', this.user);
     this.userService
-      .findUserBy('d8679948-57c4-4d3e-a078-0aae6aa3f73a')
+      .findUserBy(this.user.id)
       .subscribe((data: any) => {
         console.log(data);
         this.user = data;
@@ -40,7 +43,7 @@ export class ProfileMainComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.userService
-      .findUserBy('d8679948-57c4-4d3e-a078-0aae6aa3f73a')
+      .findUserBy(this.user.id)
       .subscribe((data: any) => {
         console.log(data);
         this.user = data;

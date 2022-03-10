@@ -1,119 +1,40 @@
-<!-- <mat-card-title>Edit Profile</mat-card-title>
-
-<div class="form-container">
-  <form [formGroup]="form" (ngSubmit)="updateUserInfo(form)">
-    <mat-form-field class="input-field-container" appearance="standard">
-      <mat-label>Firstname</mat-label>
-      <input
-        matInput
-        maxlength="15"
-        inputmode="tel"
-        value="{{ user.firstname }}"
-        formControlName="firstname"
-        #firstnameInput
-      />
-      <mat-hint>Mini character 5: {{ firstnameInput.value.length }}/5</mat-hint>
-      <mat-error **ngIf="form.get('firstname').errors?.minlength">
-        Please enter more than 5 character
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="input-field-container" appearance="standard">
-      <mat-label>Lastname</mat-label>
-      <input
-        matInput
-        maxlength="15"
-        inputmode="tel"
-        value="{{ user.lastname }}"
-        formControlName="lastname"
-        #lastnameInput
-      />
-      <mat-hint>Mini character 5: {{ lastnameInput.value.length }}/5</mat-hint>
-      <mat-error **ngIf="form.get('lastname').errors?.minlength">
-        Please enter more than 5 character
-      </mat-error>
-    </mat-form-field>
-
-    <div style="margin-top: 10px">
-      <div style="margin-right: 3%; color: #6b6b6b">
-        <mat-label>Gender</mat-label>
-      </div>
-      <mat-radio-group formControlName="gender">
-        <mat-radio-button value="male">Male</mat-radio-button>
-        &nbsp;&nbsp;
-        <mat-radio-button value="female">Female</mat-radio-button>
-        &nbsp;&nbsp;
-        <mat-radio-button value="other">Other</mat-radio-button>
-      </mat-radio-group>
-    </div>
-
-    <mat-form-field class="input-field-container" appearance="standard">
-      <mat-label>Birthday</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"  />
-      <mat-datepicker-toggle matSuffix [for]="picker">
-        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <table class="action-buttons" cellspacing="10">
-      <tr>
-        <td>
-          <button
-            mat-stroked-button
-            color="primary"
-            type="submit"
-            [disabled]="!form.valid"
-          >
-            Save Changes
-          </button>
-        </td>
-        <td>
-          <button mat-stroked-button color="primary" type="submit">
-            <span>Cancle</span>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </form>
-</div> -->
-
 <h2 mat-dialog-title>Update Profile</h2>
 <mat-dialog-content class="mat-typography">
   <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="updateUserInfo(form)">
-      
-
       <mat-form-field class="input-field-container" appearance="standard">
-        <mat-label>Firstname</mat-label>
+        <mat-label>Firstname: {{ user.firstname }}</mat-label>
         <input
+          autocomplete="off"
           matInput
           maxlength="15"
-          inputmode="tel"
           formControlName="firstname"
           #firstnameInput
         />
-        <mat-hint>Mini character 5: {{ firstnameInput.value.length }}/5</mat-hint>
+        <mat-hint
+          >Mini character 5: {{ firstnameInput.value.length }}/5</mat-hint
+        >
         <mat-error **ngIf="form.get('firstname').errors?.minlength">
           Please enter more than 5 character
         </mat-error>
       </mat-form-field>
-  
+
       <mat-form-field class="input-field-container" appearance="standard">
-        <mat-label>Lastname</mat-label>
+        <mat-label>Lastname: {{ user.lastname }} </mat-label>
         <input
+          autocomplete="off"
           matInput
           maxlength="15"
-          inputmode="tel"
           formControlName="lastname"
           #lastnameInput
         />
-        <mat-hint>Mini character 5: {{ lastnameInput.value.length }}/5</mat-hint>
+        <mat-hint
+          >Mini character 5: {{ lastnameInput.value.length }}/5</mat-hint
+        >
         <mat-error **ngIf="form.get('lastname').errors?.minlength">
           Please enter more than 5 character
         </mat-error>
       </mat-form-field>
-
 
       <div style="margin-top: 10px">
         <div style="margin-right: 3%; color: #6b6b6b">
@@ -127,44 +48,46 @@
           <mat-radio-button value="other">Other</mat-radio-button>
         </mat-radio-group>
       </div>
-  
+
       <mat-form-field class="input-field-container" appearance="standard">
         <mat-label>Birthday</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"  />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dateOfBirth"
+        />
         <mat-datepicker-toggle matSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <div align="end">
-        <table cellspacing="12" class="create-user-actions">
-          <tr>
-            <td>
-              <mat-hint *ngIf="!form.valid"
-                ><small>Please fill out all needed information</small></mat-hint
-              >
-            </td>
+      <div class="action-buttons">
+        <div fxLayout="row" fxLayoutGap="24px">
+          <div>
+            <mat-hint *ngIf="!form.valid"
+              ><small>Please fill out all needed information</small></mat-hint
+            >
+          </div>
 
-            <td>
-              <button
-                mat-raised-button
-                type="submit"
-                color="accent"
-                [disabled]="!form.valid"
-                mat-dialog-close
-              >
-                Update
-              </button>
-            </td>
+          <div>
+            <button
+              mat-raised-button
+              type="submit"
+              color="accent"
+              [disabled]="!form.valid"
+              mat-dialog-close
+            >
+              Update
+            </button>
+          </div>
 
-            <td>
-              <button mat-raised-button mat-dialog-close color="primary">
-                Cancle
-              </button>
-            </td>
-          </tr>
-        </table>
+          <div>
+            <button mat-raised-button mat-dialog-close color="primary">
+              Cancle
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </div>

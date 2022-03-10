@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -10,6 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserService {
   user: any;
   private domain = environment.API_URL;
+  // avatar
+  private isUploadAvatar$$ = new BehaviorSubject<boolean>(false);
+  isUploadAvatar$ = this.isUploadAvatar$$.asObservable();
+  //
   constructor(private http: HttpClient,
     private _snackBar: MatSnackBar) {}
 
@@ -18,7 +22,7 @@ export class UserService {
   }
 
   updateUser(id: string, user: any) {
-    console.log('user', user);
+    // console.log('user', user);
     return this.http.put<any>(`${this.domain}/users/${id}`, user, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     }).pipe(
@@ -41,7 +45,13 @@ export class UserService {
     );
   }
 
+  setUploadAvatar(isUploadAvatar: boolean) {
+    this.isUploadAvatar$$.next(isUploadAvatar);
+    console.log('isUpload:', this.isUploadAvatar$);
+  }
+
   updateAvatar(formData: FormData, id: string) {
+    
     return this.http.patch<any>(
       `${this.domain}/users/avatar/upload/${id}`,
       formData,
@@ -51,18 +61,24 @@ export class UserService {
       }
     ).pipe(
       tap( () => {
+        this.setUploadAvatar(true);
         this._snackBar.open('Uploads Avatar Successfull', 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
-        })
+        });
+        this.setUploadAvatar(false);
+        console.log('isUpload:', this.isUploadAvatar$);
       }),
       catchError( (res) => {
+        this.setUploadAvatar(true);
         this._snackBar.open(`Uploads Fail: ${res.error.error.message}`, 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
+        this.setUploadAvatar(false);
+        console.log('isUpload:', this.isUploadAvatar$);
         return throwError(res.error.error.message);
       })
     );

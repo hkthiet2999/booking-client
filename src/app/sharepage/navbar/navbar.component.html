@@ -35,11 +35,10 @@
         <li class="nav-item" *ngIf="user.role == null">
             <a class="nav-link" routerLink="login">Login</a>
         </li>
-        <li class="nav-item" *ngIf="user.role !== null">
+        <!-- <li class="nav-item" *ngIf="user.role !== null">
             <a class="nav-link" (click)="logout()">Logout</a>
-        </li>
-
-        <li>
+        </li> -->
+        <li class="nav-item" *ngIf="user.role !== null">
           <app-user-action align="end"></app-user-action>
         </li>
         

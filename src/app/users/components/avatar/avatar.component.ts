@@ -1,5 +1,6 @@
 import { UserService } from './../../services/user.services';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'app/services/auth-service';
 export interface File {
   data: any;
   progress: number;
@@ -26,22 +27,24 @@ export class AvatarComponent implements OnInit {
     progress: 0,
   };
 
-  constructor(private userService: UserService,
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
 ) {}
 
   ngOnInit(
-    
   ): void{
-    
+    this.user = this.authService.userValue
 
   }
   isPreview = false
   isSave = false;
   onSave() {
-    // this.isSave = !this.isSave;
+    this.isSave = !this.isSave;
     this.uploadFile();
-    window.location.reload();
+    // window.location.reload();
   }
+
 
   onCancle() {}
 
@@ -56,7 +59,6 @@ export class AvatarComponent implements OnInit {
       };
       this.fileUpload.nativeElement.value = '';
       this.isSave = !this.isSave;
-      // this.isSave = !this.isSave;
       // this.user.avatarUrl = this.file.data.fil
       // console.log(this.file.data);
 
@@ -76,20 +78,15 @@ export class AvatarComponent implements OnInit {
 
   async uploadFile() {
     const formData = new FormData();
-    // console.log('file:', this.file.data);
     
-
     await formData.append('image', this.file.data);
-
 
     this.userService.updateAvatar(
       formData,
-      'd8679948-57c4-4d3e-a078-0aae6aa3f73a'
-    ).subscribe(
-      res => {
-        console.log(res);
-      }
-    );
+      this.user.id
+    ).subscribe((data) => {
+      return this.userService.findUserBy(this.user.id)
+    });
 
   }
 

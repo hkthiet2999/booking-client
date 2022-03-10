@@ -1,15 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { UserService } from 'app/users/services/user.services';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { AuthService } from 'app/services/auth-service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-action',
   templateUrl: './user-action.component.html',
-  styleUrls: ['./user-action.component.scss']
+  styleUrls: ['./user-action.component.scss'],
 })
 export class UserActionComponent implements OnInit {
+  user!: any;
+  userId!: string;
+  // public isUploadAvatar$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor() { }
+  isUploadAvatar!: any
+
+  
+
+  constructor(
+    private authService: AuthService,
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
+
+    this.userService.isUploadAvatar$.subscribe((isUploadAvatar) =>{
+      console.log('isUploadAvatar???:', isUploadAvatar);
+      if(isUploadAvatar){
+        this.userService.findUserBy(this.userId).subscribe((data) => {
+          this.user = data;
+        });
+      }
+
+    } );
+
+    //
+    this.userId = this.authService.userValue.id;
+
+    this.userService.findUserBy(this.userId).subscribe((data) => {
+      this.user = data;
+    });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
+  logout() {
+    this.authService.logout();
+  }
+  // isUserServiceUploadAvatar(this.isUploadAvatar$): Observable<any> {
+  //   return true
+  // }
 }
