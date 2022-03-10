@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     MaterialModule,
     CommonComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminRoutingModule
   ],
   exports: [UserManagementComponent, DashboardComponent, UsersTableComponent],
 })

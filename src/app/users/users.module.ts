@@ -8,6 +8,7 @@ import { EditProfileComponent } from './components/profile-edit/profile-edit.com
 import { MaterialModule } from 'app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from './components/avatar/avatar.component';
+import { UsersRoutingModule } from './users-routing.module';
 
 
 
@@ -23,7 +24,8 @@ import { AvatarComponent } from './components/avatar/avatar.component';
     FlexLayoutModule,
     MaterialModule,
     CommonComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UsersRoutingModule
   ],
   exports: [
     ProfileMainComponent

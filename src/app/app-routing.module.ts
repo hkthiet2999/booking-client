@@ -14,24 +14,17 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { Role } from './_model/role';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: UserLayoutComponent,
-  // },
-  { path: 'users/profile', component: ProfileMainComponent },
-  { path: 'admin/management', component: AdminLayoutComponent },
-  { path: 'admin/guest', component: UserManagementComponent },
-  // {
-  //   path: 'home',
-  //   component: HomeComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { roles: [Role.Admin, Role.User] },
-  // },
+
+  { path: 'users',
+    canActivate: [AuthGuard],
+    data: { roles: [Role.User] },
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+
   {
     path: 'admin',
-    component: AdminComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.Admin] },
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'login',
