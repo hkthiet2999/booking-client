@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light header-container">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="">Room Booking</a>
     <button
@@ -12,6 +12,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
@@ -37,8 +38,13 @@
         <li class="nav-item" *ngIf="user.role !== null">
             <a class="nav-link" (click)="logout()">Logout</a>
         </li>
+
+        <li>
+          <app-user-action align="end"></app-user-action>
+        </li>
         
-      </ul>
-    </div>
+      </ul> 
+      
+    </div> 
   </div>
 </nav>
