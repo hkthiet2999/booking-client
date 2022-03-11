@@ -13,6 +13,11 @@ img {
   margin-top: 50px;
   max-width: 350px;
 }
+#redirectionNotification {
+  padding: 20px;
+  font-size: large;
+  color: red;
+}
 @media screen and (max-width: 600px) {
   form {
     width: 100%;

@@ -1,0 +1,49 @@
+<mat-stepper orientation="horizontal" linear="true" #stepper>
+  <mat-step>
+    <ng-template matStepLabel>Room Selection</ng-template>
+    <form>
+      <mat-form-field appearance="fill">
+        <mat-label>Room</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let item of filteredRoomArray" value={{item.codeName}} (click)="selectRoom(item)">{{item.codeName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Room Timesheet</ng-template>
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Date Range</mat-label>
+      <mat-date-range-input
+        [dateFilter]="filter"
+        [formGroup]="dateRange"
+        [rangePicker]="dateRangePicker"
+        [comparisonStart]="dateRange.value.start"
+        [comparisonEnd]="dateRange.value.end"
+      >
+        <input matStartDate placeholder="Start date" formControlName="start" />
+        <input matEndDate placeholder="End date" formControlName="end" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateRangePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+    </mat-form-field>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Confirmation</ng-template>
+    <p>Please Confirm</p>
+    <div>
+      <button
+        mat-button
+        (click)="submitBooking(); stepper.reset()"
+      >
+        Confirm booking
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>
+

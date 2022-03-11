@@ -18,7 +18,7 @@ export class HomeComponent {
   constructor(
     private authenticationService: AuthService,
     private router: Router,
-    private roomService: FakeRoomService,
+    private roomService: FakeRoomService
   ) {
     this.user = this.authenticationService.userValue;
   }

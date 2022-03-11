@@ -1,0 +1,32 @@
+<div>
+  <div *ngIf="bookingDetails; then list; else empty"></div>
+  <!-- TEMPLATES -->
+  <ng-template #list>
+    <div class="contentDetail">
+      <mat-list>
+        <div mat-line>
+          <mat-list-item>Full User's Name:  {{bookingDetails.User_name}} </mat-list-item>
+
+        </div>
+        <!-- <mat-list-item>Avatar <img src="{{ bookingDetails.userImageLink }}"alt="mmmgmm" /></mat-list-item> -->
+        <mat-divider></mat-divider>
+        <mat-list-item>Room Codename:   {{bookingDetails.Room_codeName}} </mat-list-item>
+        <!-- <mat-list-item>Room Image:<img src="{{ bookingDetails.roomImageLink }}" alt="mmmgmm"/></mat-list-item> -->
+        <mat-divider></mat-divider>
+
+        <mat-list-item>Check In Date:   {{bookingDetails.check_in_date|date}} </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>Check Out Date:   {{bookingDetails.check_out_date|date}} </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>Total Price:   ${{bookingDetails.totalPrice}} </mat-list-item>
+        <mat-divider></mat-divider>
+
+
+        <mat-list-item>Created date: {{bookingDetails.created_date|date}}</mat-list-item>
+      </mat-list>
+    </div>
+  </ng-template>
+  <ng-template #empty><p style="text-align:center;">No booking chosen</p></ng-template>
+</div>

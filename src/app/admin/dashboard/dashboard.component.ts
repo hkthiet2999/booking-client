@@ -15,8 +15,20 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navigate() {
-    this.router.navigate(['admin/guest']);
+  navigateToUserManagement() {
+    this.router.navigate(['admin/user-management']);
+
+    // this.router.navigateByUrl('#');
+  }
+
+  navigateToRoomManagement() {
+    this.router.navigate(['admin/room-management']);
+
+    // this.router.navigateByUrl('#');
+  }
+
+  navigateToBookingManagement() {
+    this.router.navigate(['admin/booking-management']);
 
     // this.router.navigateByUrl('#');
   }
