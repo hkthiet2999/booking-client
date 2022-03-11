@@ -33,20 +33,11 @@
           <profile-view-details [user]="user"></profile-view-details>
         </div>
 
-        <table class="action-buttons" cellspacing="10">
-          <tr>
-            <td>
-              <button mat-stroked-button color="primary" (click)="onClickUpdatedUser()">
-                <span >Update Profile</span>
-              </button>
-            </td>
-            <td>
-              <button mat-stroked-button color="primary">
-                <span>Change Password</span>
-              </button>
-            </td>
-          </tr>
-        </table>
+        <div class="action-buttons" >
+          <button mat-stroked-button color="primary" (click)="onClickUpdatedUser()">
+            <span >Update Profile</span>
+          </button>
+        </div>
       </mat-card>
     </div>
   </div>
