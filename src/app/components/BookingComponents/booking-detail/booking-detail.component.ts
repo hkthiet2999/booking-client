@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BookingService } from 'src/app/services/booking.service';
+import { BookingConnectionService } from 'src/app/services/booking.service';
 import { Booking } from 'src/app/_model/booking.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { Booking } from 'src/app/_model/booking.model';
 })
 export class BookingDetailComponent implements OnInit {
   @Input() bookingDetails: Booking;
-  constructor(private bookingService: BookingService) {}
+  constructor(private bookingService: BookingConnectionService) {}
 
   ngOnInit(): void {
     this.bookingService.getCurrentBooking.subscribe((bookingData) => {

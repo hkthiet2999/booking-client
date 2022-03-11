@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service';
 import { FakeRoomService } from 'src/app/services/fake-room.service';
-import { BookingConnectionService } from 'src/app/services/httpConnection.service';
+import { BookingConnectionService } from 'src/app/services/booking.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingConfirmDialog } from '../BookingComponents/booking-confirm-dialog/booking-confirm-dialog';

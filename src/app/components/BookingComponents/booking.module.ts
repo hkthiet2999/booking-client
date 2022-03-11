@@ -44,8 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { BookingService } from 'src/app/services/booking.service';
-import { BookingConnectionService } from 'src/app/services/httpConnection.service';
+import { BookingConnectionService } from 'src/app/services/booking.service';
 import { BookingConfirmDialog } from './booking-confirm-dialog/booking-confirm-dialog';
 import { BookingDetailComponent } from './booking-detail/booking-detail.component';
 import { BookingDialogueComponent } from './booking-dialogue/booking-dialogue.component';
@@ -115,6 +114,6 @@ import { BookingSectionComponent } from './booking-section/booking-section.compo
     BookingDialogueComponent,
     BookingConfirmDialog,
   ],
-  providers: [BookingService, BookingConnectionService],
+  providers: [BookingConnectionService],
 })
 export class BookingModule {}

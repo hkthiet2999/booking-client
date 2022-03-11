@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FakeRoomService } from 'src/app/services/fake-room.service';
-import { BookingConnectionService, Room, RoomSize } from 'src/app/services/httpConnection.service';
-import { Booking } from 'src/app/_model/booking.model';
+import { BookingConnectionService, Room } from 'src/app/services/booking.service';
 export interface BookingIndata{
   uuid:string;
   roomid:string;

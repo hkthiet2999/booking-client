@@ -10,8 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { BookingConnectionService } from 'src/app/services/httpConnection.service';
-import { BookingService } from 'src/app/services/booking.service';
+import { BookingConnectionService } from 'src/app/services/booking.service';
 import { Booking } from 'src/app/_model/booking.model';
 import { User } from 'src/app/_model/user';
 import { BookingConfirmDialog } from '../booking-confirm-dialog/booking-confirm-dialog';
@@ -40,7 +39,6 @@ export class BookingListComponent implements OnInit, OnChanges {
   ];
 
   constructor(
-    private bookingService: BookingService,
     private cdref: ChangeDetectorRef,
     private conn: BookingConnectionService,
     public dialog: MatDialog
@@ -57,15 +55,15 @@ export class BookingListComponent implements OnInit, OnChanges {
     this.cdref.detectChanges();
   }
   onBookingSelected(event: Booking) {
-    this.bookingService.setBooking(event);
+    this.conn.setBooking(event);
   }
   onModifyActionSelected(event: Booking) {
-    this.bookingService.setBooking(event);
+    this.conn.setBooking(event);
     this.openDialog(event)
   }
 
   onDeleteActionSelected(event: Booking) {
-    this.bookingService.setBooking(event);
+    this.conn.setBooking(event);
     this.deleteBooking(event.uuid)
   }
 
