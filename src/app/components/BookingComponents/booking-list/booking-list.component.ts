@@ -14,6 +14,9 @@ import { BookingConnectionService } from 'src/app/services/httpConnection.servic
 import { BookingService } from 'src/app/services/booking.service';
 import { Booking } from 'src/app/_model/booking.model';
 import { User } from 'src/app/_model/user';
+import { BookingConfirmDialog } from '../booking-confirm-dialog/booking-confirm-dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { BookingDialogueComponent } from '../booking-dialogue/booking-dialogue.component';
 
 @Component({
   selector: 'app-booking-list',
@@ -23,29 +26,30 @@ import { User } from 'src/app/_model/user';
 export class BookingListComponent implements OnInit, OnChanges {
   dummyArray: Booking[];
   bookingData: MatTableDataSource<Booking>;
-  @Input() user: User;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   expandedElement: Booking | null;
   displayedColumns = [
-    'bookingid',
+    'uuid',
     'userid',
     'roomid',
     'check_in_date',
     'check_out_date',
+    'pricing',
     'action',
   ];
 
   constructor(
     private bookingService: BookingService,
     private cdref: ChangeDetectorRef,
-    private conn: BookingConnectionService
+    private conn: BookingConnectionService,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {}
   ngOnChanges() {
     this.cdref.detectChanges();
   }
-  ngAfterViewInit() {
+  ngAfterViewInit() {   
     this.refreshData();
     this.bookingData = new MatTableDataSource(this.dummyArray);
     this.bookingData.paginator = this.paginator;
@@ -57,16 +61,28 @@ export class BookingListComponent implements OnInit, OnChanges {
   }
   onModifyActionSelected(event: Booking) {
     this.bookingService.setBooking(event);
-    console.log('modify chosen, not implemented');
+    this.openDialog(event)
   }
 
   onDeleteActionSelected(event: Booking) {
     this.bookingService.setBooking(event);
-    console.log('delete chosen, not implemented');
+    this.deleteBooking(event.uuid)
   }
 
-  onActionSelected(event: Booking) {
-    this.bookingService.setBooking(event);
+  openDialog(booking:Booking){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height='80vh';
+    dialogConfig.width='70vw';
+    dialogConfig.data={uuid:booking.uuid,roomid:booking.roomid,check_in_date:booking.check_in_date,check_out_date:booking.check_out_date}
+    const dialogref = this.dialog.open(BookingDialogueComponent ,dialogConfig);
+
+    dialogref.afterClosed().subscribe((result) => {
+      if (result) {
+        this.refreshData();
+      }
+    });
   }
 
   sortData(event: Sort) {
@@ -103,8 +119,11 @@ export class BookingListComponent implements OnInit, OnChanges {
       for (const entry of inData) {
         newData.push(new Booking(entry));
       }
-      newData = newData.sort(() => Math.random() - 0.5);
       this.bookingData.data = newData;
     });
+  }
+
+  deleteBooking(uuid:string){
+    this.conn.deleteBooking(uuid).subscribe((data)=>{this.refreshData()})
   }
 }

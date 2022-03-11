@@ -1,58 +1,68 @@
-
-  <div class="container mt-5 mb-3">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="d-flex flex-row p-2">
-                    <div class="d-flex flex-column"> <span class="font-weight-bold">Pricing Information</span> </div>
-                </div>
-                <hr>
-                <div class="table-responsive p-2">
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr class="Room Name">
-                                <td>Room</td>
-                                <td>{{indata.roomid}}</td>
-                            </tr>
-                            <tr class="content">
-                                <td>From <br> {{indata.startdate|date}}</td>
-                                <td>To <br> {{indata.enddate|date}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-                <div >
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr class="headerRow">
-                                <td>Room Name</td>
-                                <td>Room Size</td>
-                                <td>Days</td>
-                                <td>Price Per Day</td>
-                                <td>Total</td>
-                            </tr>
-                            <tr class="contentRow">
-                                <td>{{indata.genericRoomData.codeName}}</td>
-                                <td>{{indata.genericRoomData.size}}</td>
-                                <td>{{indata.days}}</td>
-                                <td>{{indata.pricePerDay}}</td>
-                                <td>${{indata.days*indata.pricePerDay}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="container mt-5 mb-3">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="d-flex flex-row p-2">
+          <div class="d-flex flex-column">
+            <span class="font-weight-bold">{{indata.dialogTitle}}</span>
+          </div>
         </div>
-    </div>
-    
-    <div class="flex-box-2">
-        <div class="rightbuttons">
-            <button class="btn btn-md btn-dark mt-3" (click)="cancel()">Cancel</button>
+        <hr />
+        <div class="table-responsive p-2">
+          <table class="table table-borderless">
+            <tbody>
+              <tr class="Room Name">
+                <td>Room</td>
+                <td>{{indata.roomid}}</td>
+              </tr>
+              <tr class="content">
+                <td>
+                  From <br />
+                  {{indata.startdate|date}}
+                </td>
+                <td>
+                  To <br />
+                  {{indata.enddate|date}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="rightbuttons"> 
-            <button class="btn btn-md btn-light mt-3" (click)="confirm()">Confirm</button>
+        <hr />
+        <div>
+          <table class="table table-borderless">
+            <tbody>
+              <tr class="headerRow">
+                <td>Room Name</td>
+                <td>Room Size</td>
+                <td>Days</td>
+                <td>Price Per Day</td>
+                <td>Total</td>
+              </tr>
+              <tr class="contentRow">
+                <td>{{indata.genericRoomData.codeName}}</td>
+                <td>{{indata.genericRoomData.size}}</td>
+                <td>{{indata.days}}</td>
+                <td>{{indata.pricePerDay}}</td>
+                <td>${{indata.days*indata.pricePerDay}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        
+      </div>
     </div>
   </div>
+
+  <div class="flex-box-2">
+    <div class="rightbuttons">
+      <button class="btn btn-md btn-dark mt-3" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+    <div class="rightbuttons">
+      <button class="btn btn-md btn-light mt-3" (click)="confirm()">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>

@@ -33,15 +33,10 @@
           <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
         </mat-form-field>
         <mat-divider></mat-divider>
-        <div *ngIf="">
-          
-        </div>
-        <button class="btn btn-md btn-dark mt-3"  (click)="openDialog()">
+        <div *ngIf=""></div>
+        <button class="btn btn-md btn-dark mt-3" (click)="openDialog()">
           Book Room
         </button>
-        
-
-        <div *ngIf="response" id="redirectionNotification">Booking confirmed, redirecting to home page</div>
       </form>
     </div>
   </div>

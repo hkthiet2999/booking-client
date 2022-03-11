@@ -1,36 +1,11 @@
-<mat-stepper orientation="horizontal" linear="isLinear" #stepper>
-  <mat-step>
-    <ng-template matStepLabel>Which room size would you like</ng-template>
-    <form>
-      <mat-form-field appearance="fill">
-        <mat-label>Room Size</mat-label>
-        <mat-select required>
-          <mat-option
-            *ngFor="let size of RoomSizeArray"
-            value="{{ size }}"
-            (click)="selectSize(size)"
-            >{{ size }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </mat-step>
-
+<mat-stepper orientation="horizontal" linear="true" #stepper>
   <mat-step>
     <ng-template matStepLabel>Room Selection</ng-template>
-    <ng-template
-      *ngIf="SelectedSize; then selectedSize; else notselectedSize"
-    ></ng-template>
     <form>
       <mat-form-field appearance="fill">
         <mat-label>Room</mat-label>
         <mat-select>
-          <mat-option
-            *ngFor="let item of filteredRoomArray"
-            value="{{ item }}"
-            (click)="selectRoom(item)"
-            >{{ item.codeName }}</mat-option
-          >
+          <mat-option *ngFor="let item of filteredRoomArray" value={{item.codeName}} (click)="selectRoom(item)">{{item.codeName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>
@@ -56,9 +31,6 @@
       ></mat-datepicker-toggle>
       <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
     </mat-form-field>
-    <div>
-      <button mat-button (click)="confirmDate($event)">Confirm date</button>
-    </div>
   </mat-step>
 
   <mat-step>
@@ -67,7 +39,7 @@
     <div>
       <button
         mat-button
-        (click)="submitBooking(); resetBooking(); stepper.reset()"
+        (click)="submitBooking(); stepper.reset()"
       >
         Confirm booking
       </button>
@@ -75,10 +47,3 @@
   </mat-step>
 </mat-stepper>
 
-<ng-template matStepLabel #notselectedSize
-  >You didn't choose room size</ng-template
->
-<ng-template matStepLabel #selectedSize
-  >Basing on selection of size {{ SelectedSize }}, we found
-  {{ filteredRoomArray?.length }} rooms
-</ng-template>

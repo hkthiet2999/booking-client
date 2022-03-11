@@ -14,11 +14,13 @@ mat-table {
   width: 100%;
   height: calc(60vh - 32px);
   max-height: 100%;
+  justify-content: center;
 }
 .mat-header-row {
   width: 100%;
   border-radius: 10px;
 }
+
 
 mat-paginator {
   border-radius: 10px;
@@ -26,16 +28,24 @@ mat-paginator {
 
 .mat-header-cell {
   vertical-align: middle;
-  width: 20%;
+  width: 16%;
+  margin: auto;flex-direction: column;
+  justify-content: center;
   text-align: center;
   background: rgb(28, 28, 167);
   opacity: 1;
   color: rgb(223, 160, 26);
   overflow: hidden;
   text-overflow: ellipsis;
+  #uuidcolumn{
+    width: 20%;
+  }
+  #actioncolumn{
+    width: 10%;
+  }
 }
 .mat-cell {
-  color: rgb(0, 217, 255);
+  color: rgb(0, 0, 0);
   white-space: nowrap;
   text-align: center;
   padding: 4px;

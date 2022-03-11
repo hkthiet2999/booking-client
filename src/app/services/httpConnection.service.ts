@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, isObservable, map, Observable } from 'rxjs';
+import { catchError, firstValueFrom, isObservable, map, Observable } from 'rxjs';
 import { BookingDTO, createBookingDTO } from '../_model/booking.model';
 declare const Zone: any;
 
 @Injectable()
 export class BookingConnectionService {
   constructor(private http: HttpClient) {}
-  currentToken =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNjc0Nzk1Yy1hMThiLTQxNDUtYjkwZS0zMTZmZmYxYzRlYmMiLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ2Nzk2ODkzLCJleHAiOjE2NDY4ODMyOTN9.s7KRfG3vtqPgkDnMZEaVAMDUcnjrA2zc8dyiHQ0ixEQ';
+   port = 3000
+   rootURL=`http://localhost:${this.port}/`
+  currentToken ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxYTFjNDU3ZC1lZGE1LTRmMWEtODM3MS1hOThjOWYxMzdhZWMiLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ2OTA0OTE5LCJleHAiOjE2NDY5OTEzMTl9.N-HF8MOZS1ILYE4OaQR0iuB1lTvBYVNSJiAPjEvAjrA"
   fetchAllBooking(): Observable<BookingDTO[]> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -16,9 +17,8 @@ export class BookingConnectionService {
         Authorization: `${this.currentToken}`,
       }),
     };
-    console.log('fetch Bookings flared');
     return this.http.get<BookingDTO[]>(
-      'http://localhost:3000/booking',
+      `${this.rootURL}booking`,
       httpOptions
     );
   }
@@ -32,8 +32,7 @@ export class BookingConnectionService {
         Authorization: `${this.currentToken}`,
       }),
     };
-    console.log('fetch Rooms flared');
-    return this.http.get<RoomDTO[]>('http://localhost:3000/rooms', httpOptions);
+    return this.http.get<RoomDTO[]>(`${this.rootURL}rooms`, httpOptions);
   }
   getRoomTimesheet(uuid: string): Observable<Date[]> {
     const httpOptions = {
@@ -42,10 +41,9 @@ export class BookingConnectionService {
         Authorization: `${this.currentToken}`,
       }),
     };
-    console.log('fetch Timesheet flared for room ' + uuid);
     return this.http
       .get<Date[]>(
-        'http://localhost:3000/booking/timetable/' + uuid,
+        `${this.rootURL}booking/timetable/` + uuid,
         httpOptions
       )
       .pipe((value) => {
@@ -70,29 +68,44 @@ export class BookingConnectionService {
         Authorization: `${this.currentToken}`,
       }),
     };
-    console.log('create booking flared ');
-
     return this.http.post<createBookingDTO>(
-      'http://localhost:3000/booking/',
+      `${this.rootURL}booking/`,
       object,
       httpOptions
     );
   }
-  async waitFor<T>(prom: Promise<T> | Observable<T>): Promise<T> {
-    if (isObservable(prom)) {
-      prom = firstValueFrom(prom);
-    }
-    const macroTask = Zone.current.scheduleMacroTask(
-      `WAITFOR-${Math.random()}`,
-      () => {},
-      {},
-      () => {}
-    );
-    return prom.then((p: T) => {
-      macroTask.invoke();
-      return p;
-    });
+
+  deleteBooking(bookinguuid:string){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `${this.currentToken}`,
+      }),
+    };
+    return this.http.delete(
+      `${this.rootURL}booking/${bookinguuid}`,
+      httpOptions
+    )
+    ;
   }
+
+  updateBooking(uuid:string,roomid:string,cInDate:Date,cOutDate:Date){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `${this.currentToken}`,
+        'Content-Type': 'application/json',
+      }),
+    };
+    const object = {RoomID:roomid,check_in_date:cInDate,check_out_date:cOutDate}
+    console.log(object)
+    return this.http.patch(
+      `${this.rootURL}booking/${uuid}`,
+      object,
+      httpOptions
+    )
+  }
+
+
+  
 }
 
 export class RoomDTO {

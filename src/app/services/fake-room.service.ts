@@ -8,7 +8,7 @@ export class FakeRoomService {
 
   roomList = [
     {
-      id: '64a847d1-b8bc-4526-bad7-4cd54c97a362',
+      id: 'd269aae8-8cf0-4eef-877d-281042b11f49',
       codeName: 'GARKIN1439',
       isVacant: true,
       size: 'single',

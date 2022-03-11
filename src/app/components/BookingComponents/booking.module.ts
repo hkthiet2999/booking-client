@@ -106,14 +106,14 @@ import { BookingSectionComponent } from './booking-section/booking-section.compo
     BookingListComponent,
     BookingDetailComponent,
     BookingDialogueComponent,
-    BookingConfirmDialog
+    BookingConfirmDialog,
   ],
   exports: [
     BookingSectionComponent,
     BookingListComponent,
     BookingDetailComponent,
     BookingDialogueComponent,
-    BookingConfirmDialog
+    BookingConfirmDialog,
   ],
   providers: [BookingService, BookingConnectionService],
 })

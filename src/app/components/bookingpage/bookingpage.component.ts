@@ -16,11 +16,10 @@ export class BookingpageComponent implements OnInit {
   roomId: any;
   roomData: any;
   userId: any;
-  response: boolean = false;
   SelectedRoomTimesheet: Data[] = [];
   dateRange = new FormGroup({
-    start: new FormControl('',Validators.required),
-    end: new FormControl('',Validators.required),
+    start: new FormControl('', Validators.required),
+    end: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -29,7 +28,7 @@ export class BookingpageComponent implements OnInit {
     private conn: BookingConnectionService,
     private cdref: ChangeDetectorRef,
     private router: Router,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +50,6 @@ export class BookingpageComponent implements OnInit {
 
   filter = (date: Date): boolean => {
     let res = [];
-    console.log(this.SelectedRoomTimesheet);
     for (let i = 0; i < this.SelectedRoomTimesheet.length; i += 2) {
       res.push(
         this.inRange(
@@ -65,7 +63,6 @@ export class BookingpageComponent implements OnInit {
   };
 
   inRange(val: Date, start: any, end: any) {
-    console.log(val);
     start = new Date(start);
     end = new Date(end);
     if (
@@ -80,23 +77,28 @@ export class BookingpageComponent implements OnInit {
     return false;
   }
 
-  openDialog(){
-    
-    const days=(this.dateRange.value.end -this.dateRange.value.start)/(1000 * 60 * 60 * 24)
+  openDialog() {
+    const days =
+      (this.dateRange.value.end - this.dateRange.value.start) /
+      (1000 * 60 * 60 * 24);
     const dialogRef = this.dialog.open(BookingConfirmDialog, {
       width: '750px',
       data: {
-             startdate:this.dateRange.value.start,
-             enddate:this.dateRange.value.end,
-             roomid:this.roomId,
-             pricePerDay:this.roomData[0].price,
-             days:days,
-             genericRoomData:this.roomData[0]}
+        dialogTitle:"Pricing Information",
+        startdate: this.dateRange.value.start,
+        enddate: this.dateRange.value.end,
+        roomid: this.roomId,
+        pricePerDay: this.roomData[0].price,
+        days: days,
+        genericRoomData: this.roomData[0],
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result=>{if(result){
-      this.submitBooking()
-    }})
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.submitBooking();
+      }
+    });
   }
 
   submitBooking() {
@@ -108,10 +110,13 @@ export class BookingpageComponent implements OnInit {
         this.dateRange.value.end
       )
       .subscribe((data) =>
-        this.conn.getRoomTimesheet(this.roomId).subscribe((data) => {
-          this.response = true;
-          setTimeout(() => this.router.navigate(['/']), 2000);
-        })
-      );
+        this.conn.getRoomTimesheet(this.roomId).subscribe(
+          (data) => 
+          {
+            console.log(data)
+            setTimeout(() => this.router.navigate(['/']), 2000);
+          }
+        )
+      )
   }
 }

@@ -17,6 +17,8 @@ export class Booking implements IBookingInterface {
   public check_out_date: Date;
   public created_date: Date;
   public totalPrice: number;
+  public User_name:string;
+  public Room_codeName:string;
 
   // constructor( uuid:string, userid:string, roomid:string, check_in_date:Date,  check_out_date:Date){
   //     this.uuid = uuid
@@ -34,9 +36,10 @@ export class Booking implements IBookingInterface {
     this.check_in_date = object.check_in_date;
     this.check_out_date = object.check_out_date;
     this.totalPrice = object.totalPrice;
+    this.User_name=object.User_name;
+    this.Room_codeName=object.Room_codeName
   }
 
-  assign(object: BookingDTO) {}
 }
 
 export class BookingDTO {
@@ -48,6 +51,9 @@ export class BookingDTO {
   public check_out_date: Date;
   public created_date: Date;
   public totalPrice: number;
+  public User_name:string;
+  public Room_codeName:string;
+
 }
 export class createBookingDTO {
   public user_id: string;
