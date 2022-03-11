@@ -46,6 +46,7 @@ export class BookingDialogueComponent implements OnInit {
     this.cdref.detectChanges()
   }
 
+
  filter = (date: Date): boolean => {
   let res = [];
   for (let i = 0; i < this.SelectedRoomTimesheet.length; i += 2) {
@@ -87,6 +88,9 @@ export class BookingDialogueComponent implements OnInit {
       this.conn.getRoomTimesheet(this.SelectedRoom.uuid).subscribe(
         (data)=>{
           this.SelectedRoomTimesheet=data;
+          if (this.SelectedRoom.uuid==this.indata.roomid){
+            this.SelectedRoomTimesheet=this.SelectedRoomTimesheet.filter((element)=>{element==new Date(this.indata.check_in_date) ||element!=new Date(this.indata.check_in_date)})
+          }
       })
   }
 
