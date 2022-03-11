@@ -59,8 +59,6 @@ export class AvatarComponent implements OnInit {
       };
       this.fileUpload.nativeElement.value = '';
       this.isSave = !this.isSave;
-      // this.user.avatarUrl = this.file.data.fil
-      // console.log(this.file.data);
 
       let reader = new FileReader();
 
@@ -72,7 +70,6 @@ export class AvatarComponent implements OnInit {
       this.isPreview = !this.isPreview
       console.log(this.imgSrc);
 
-      // this.uploadFile();
     };
   }
 

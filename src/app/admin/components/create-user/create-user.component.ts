@@ -1,11 +1,8 @@
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Optional, Output } from '@angular/core';
 import { CustomValidators } from 'app/admin/_helpers/custom-validators';
-
-interface GenderOptions {
-  value: string;
-  viewValue: string;
-}
+import { AdminService } from 'app/admin/services/admin.service';
+import { UsersTableComponent } from '../users-table/users-table.component';
 
 @Component({
   selector: 'app-create-user',
@@ -13,10 +10,8 @@ interface GenderOptions {
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
-  @ViewChild('createUser', { static: false }) createUser!: ElementRef;
 
-
-  formRegister: FormGroup = new FormGroup({
+  formCreateUser: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     firstname: new FormControl(null, [Validators.required]),
     lastname: new FormControl(null, [Validators.required]),
@@ -26,51 +21,54 @@ export class CreateUserComponent implements OnInit {
     validators: CustomValidators.passwordsMatching
   })
 
+  usersAPI!: any;
+
+  @Output() usersUpdated = new EventEmitter<any>();
+
   constructor(
-    private formBuilder: FormBuilder,
+    private adminService: AdminService,
+    
   ) { }
 
   ngOnInit(): void {
-
    
   }
 
-  register() { 
-    console.log('call authService.register');
-    // if (this.formRegister.valid) {
-    //   this.authService.register({
-    //     email: this.email.value,
-    //     firstname: this.firstname.value,
-    //     lastname: this.lastname.value,
-    //     password: this.password.value,
-    //     passwordConfirm: this.passwordConfirm.value,
-    //   }).pipe(
-    //     tap(() => this.router.navigate(['../login']))
-    //   ).subscribe();
-    // }
+  onSave = new EventEmitter();
+
+  onCreateUser(formCreateUser: { value: string }) { 
+    this.adminService.createUser(
+      JSON.stringify(formCreateUser.value)
+    ).subscribe( (any) : any => {
+      this.adminService.getAllUsers().subscribe( (data: any) => {
+        this.usersAPI = data;
+        // console.log('Updated users:',this.usersAPI);
+        this.onSave.emit(this.usersAPI);
+      });
+    }
+      
+    )
   }
   
   get email(): FormControl {
-    return this.formRegister.get('email') as FormControl;
+    return this.formCreateUser.get('email') as FormControl;
   }
 
   get firstname(): FormControl {
-    return this.formRegister.get('firstname') as FormControl;
+    return this.formCreateUser.get('firstname') as FormControl;
   }
 
   get lastname(): FormControl {
-    return this.formRegister.get('lastname') as FormControl;
+    return this.formCreateUser.get('lastname') as FormControl;
   }
 
   get password(): FormControl {
-    return this.formRegister.get('password') as FormControl;
+    return this.formCreateUser.get('password') as FormControl;
   }
 
   get passwordConfirm(): FormControl {
-    return this.formRegister.get('passwordConfirm') as FormControl;
+    return this.formCreateUser.get('passwordConfirm') as FormControl;
   }
-
-
 
 
 }

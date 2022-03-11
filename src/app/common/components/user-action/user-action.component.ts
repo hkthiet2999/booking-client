@@ -11,11 +11,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserActionComponent implements OnInit {
   user!: any;
   userId!: string;
-  // public isUploadAvatar$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   isUploadAvatar!: any
-
-  
+  isAdmin!: any
 
   constructor(
     private authService: AuthService,
@@ -24,8 +21,8 @@ export class UserActionComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.userService.isUploadAvatar$.subscribe((isUploadAvatar) =>{
-      console.log('isUploadAvatar???:', isUploadAvatar);
       if(isUploadAvatar){
         this.userService.findUserBy(this.userId).subscribe((data) => {
           this.user = data;
@@ -35,6 +32,8 @@ export class UserActionComponent implements OnInit {
     } );
 
     //
+    this.isAdmin = this.authService.userValue.role === 'admin' ? true : false ;
+    
     this.userId = this.authService.userValue.id;
 
     this.userService.findUserBy(this.userId).subscribe((data) => {
@@ -48,7 +47,5 @@ export class UserActionComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-  // isUserServiceUploadAvatar(this.isUploadAvatar$): Observable<any> {
-  //   return true
-  // }
+
 }

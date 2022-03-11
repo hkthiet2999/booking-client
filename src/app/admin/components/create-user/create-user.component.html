@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Create User</h2>
 <mat-dialog-content class="mat-typography">
   <div class="form-container">
-    <form [formGroup]="formRegister" (ngSubmit)="register()">
+    <form [formGroup]="formCreateUser" (ngSubmit)="onCreateUser(formCreateUser)">
       <mat-form-field class="input-field-container" appearance="outline">
         <mat-label>Email</mat-label>
         <input
@@ -68,40 +68,38 @@
         <mat-error
           *ngIf="
             passwordConfirm.touched &&
-            formRegister.hasError('passwordsNotMatching')
+            formCreateUser.hasError('passwordsNotMatching')
           "
           ><small>Passwords are not matching</small></mat-error
         >
       </mat-form-field>
 
-      <div align="end">
-        <table cellspacing="12" class="create-user-actions">
-          <tr>
-            <td>
-              <mat-hint *ngIf="!formRegister.valid"
-                ><small>Please fill out all needed information</small></mat-hint
-              >
-            </td>
+      <div class="action-buttons">
+        <div fxLayout="row" fxLayoutGap="24px">
+          <div>
+            <mat-hint *ngIf="!formCreateUser.valid"
+              ><small>Please fill out all needed information</small></mat-hint
+            >
+          </div>
 
-            <td>
-              <button
-                mat-raised-button
-                type="submit"
-                color="accent"
-                [disabled]="!formRegister.valid"
-                mat-dialog-close
-              >
-                Create User
-              </button>
-            </td>
+          <div>
+            <button
+              mat-raised-button
+              type="submit"
+              color="accent"
+              [disabled]="!formCreateUser.valid"
+              mat-dialog-close
+            >
+              Create User
+            </button>
+          </div>
 
-            <td>
-              <button mat-raised-button mat-dialog-close color="primary">
-                Cancle
-              </button>
-            </td>
-          </tr>
-        </table>
+          <div>
+            <button mat-raised-button mat-dialog-close color="primary">
+              Cancle
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </div>

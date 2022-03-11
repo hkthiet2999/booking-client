@@ -11,7 +11,7 @@
                   [src]="
                     user.avatarUrl
                       ? user.avatarUrl
-                      : 'http://res.cloudinary.com/booking-api-cvn/image/upload/v1646378948/booking-api-cvn/vn-painting-14-4845d-1646378947053-926816594.jpg'
+                      : 'assets/images/user-null-avatar.png'
                   "
                 />
               </div>
@@ -38,16 +38,6 @@
       <div class="card">
         <div class="card-body">
           <mat-list>
-            <!-- <div *ngIf="user.id">
-              <div mat-subheader>User ID</div>
-              <mat-list-item>
-                <mat-icon>info</mat-icon>
-                <div mat-line>
-                  <p>{{ user.id }}</p>
-                </div>
-              </mat-list-item>
-            </div> -->
-
             <div *ngIf="user.email">
               <mat-divider></mat-divider>
               <div mat-subheader>Email</div>

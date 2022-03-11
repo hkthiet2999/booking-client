@@ -16,14 +16,4 @@ export class UserManagementComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClickCreateUser(){
-    const dialogRef = this.dialog.open(CreateUserComponent, {
-      height: '35vw',
-      width: '60vw',
-    })
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
-  }
 }

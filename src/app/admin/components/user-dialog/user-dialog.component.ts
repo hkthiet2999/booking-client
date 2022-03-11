@@ -1,5 +1,5 @@
 import { UserInterface } from './../../../users/users.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Inject } from '@angular/core';
 
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -17,6 +17,8 @@ export class UserDialogComponent implements OnInit {
   userId!: string;
   user!: UserInterface;
 
+  usersAPI!: any;
+
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -24,6 +26,7 @@ export class UserDialogComponent implements OnInit {
     private adminService: AdminService,
   ) {
   }
+  onSave = new EventEmitter();
 
   ngOnInit(): void {
     this.userId = this.data.userId
@@ -34,8 +37,10 @@ export class UserDialogComponent implements OnInit {
 
   onConfirmDelete(userId: any){
     this.adminService.deleteUser(userId).subscribe( (data) => {
-      console.log(data);
-      window.location.reload()
+      this.adminService.getAllUsers().subscribe( (data: any) => {
+        this.usersAPI = data;
+        this.onSave.emit(this.usersAPI);
+      });
     })
   }
 }

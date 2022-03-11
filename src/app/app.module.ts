@@ -69,6 +69,7 @@ import { FooterComponent } from './sharepage/footer/footer.component';
 import { RoommenuComponent } from './components/roommenu/roommenu.component';
 import { BookingpageComponent } from './components/bookingpage/bookingpage.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ErrorCodeComponent } from './sharepage/error-code/error-code.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     BookingpageComponent,
     UserLayoutComponent,
     AdminLayoutComponent,
+    ErrorCodeComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminService } from 'app/admin/services/admin.service';
 import { UserInterface } from 'app/users/users.interface';
+import { CreateUserComponent } from '../create-user/create-user.component';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 @Component({
@@ -34,22 +35,15 @@ export class UsersTableComponent implements OnInit {
       console.log(data);
       this.usersAPI = data;
 
-      const users = Array.from({ length: this.usersAPI.length }, (_, k) =>
+      let users = Array.from({ length: this.usersAPI.length }, (_, k) =>
         createOneUser(k, this.usersAPI)
       );
 
       this.dataSource = new MatTableDataSource(users);
-      // console.log('Data source: ', this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
-
-  // ngAfterViewInit() {
-  //   // console.log('Co dataSource:', this.dataSource);
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -63,23 +57,39 @@ export class UsersTableComponent implements OnInit {
   onClickUserDetails(userId: string) {
     console.log(userId);
 
-    const dialogRef = this.dialog.open(UserDialogComponent, {
+    const dialogRefUserDetails = this.dialog.open(UserDialogComponent, {
       data: { userId: userId },
       height: '35vw',
       width: '60vw',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRefUserDetails.componentInstance.onSave.subscribe((data) => {
+      console.log('Data emitted:', data);
+      let users = Array.from({ length: data.length }, (_, k) =>
+        createOneUser(k, data)
+      );
+      this.dataSource = new MatTableDataSource(users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  onClickCreateUser() {
+    const dialogRefCreateUser = this.dialog.open(CreateUserComponent, {
+      height: '35vw',
+      width: '60vw',
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
-
-    //   const dialogSubmitSubscription =
-    //   dialogRef.componentInstance.submitClicked.subscribe(result => {
-    //   dialogSubmitSubscription.unsubscribe();
-    // });
+    dialogRefCreateUser.componentInstance.onSave.subscribe((data) => {
+      console.log('Data emitted:', data);
+      let users = Array.from({ length: data.length }, (_, k) =>
+        createOneUser(k, data)
+      );
+      this.dataSource = new MatTableDataSource(users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+    
   }
 }
 
@@ -93,7 +103,7 @@ function createOneUser(id: number, usersAPI: any): UserInterface {
     fullname: fullname,
     avatar: usersAPI[id].avatarUrl
       ? usersAPI[id].avatarUrl
-      : 'https://t3.ftcdn.net/jpg/02/09/37/00/360_F_209370065_JLXhrc5inEmGl52SyvSPeVB23hB6IjrR.jpg',
+      : 'assets/images/user-null-avatar.png',
     gender: usersAPI[id].gender,
     birthday: usersAPI[id].dateOfBirth,
   };

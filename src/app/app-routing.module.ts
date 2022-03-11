@@ -12,19 +12,23 @@ import { HomeComponent } from './components/home/home.component';
 import { RoommenuComponent } from './components/roommenu/roommenu.component';
 import { AuthGuard } from './_helpers/auth.guard';
 import { Role } from './_model/role';
+import { ErrorCodeComponent } from './sharepage/error-code/error-code.component';
 
 const routes: Routes = [
-
-  { path: 'users',
+  {
+    path: 'users',
     canActivate: [AuthGuard],
-    data: { roles: [Role.User] },
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+    data: { roles: [Role.User, Role.Admin] },
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
+  },
 
   {
     path: 'admin',
     canActivate: [AuthGuard],
     data: { roles: [Role.Admin] },
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'login',
@@ -49,7 +53,8 @@ const routes: Routes = [
     data: { roles: [Role.Admin, Role.User] },
   },
   // otherwise redirect to home
-  { path: '**', redirectTo: '' },
+  { path: '404', component: ErrorCodeComponent },
+  { path: '**', redirectTo: '/404' },
 
   // user + admin routes
 ];

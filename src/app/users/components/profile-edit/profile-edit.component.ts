@@ -49,13 +49,6 @@ export class EditProfileComponent implements OnInit {
 
   
   }
-
-  // saveDetails(form: { value: any }) {
-  //   // let jsonValue = JSON.stringify(form.value, null, 4);
-  //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(form.value, null, 4));
-  //   this.updateUserInfo(form);
-  // }
-
   genderOptions: GenderOptions[] = [
     { value: 'male', viewValue: 'Male' },
     { value: 'female', viewValue: 'Female' },
@@ -63,16 +56,11 @@ export class EditProfileComponent implements OnInit {
   ];
 
   updateUserInfo(form: { value: string }) {
-    // if(form.value.firstname == null){
 
-    // }
-
-    // console.log('parseForm:', parseForm);
 
     this.userService
       .updateUser(this.user.id, JSON.stringify(form.value))
       .subscribe((user) => {
-        console.log('Data subscribe:', user);
         this.updatedUserId = user.id;
         return this.userService.findUserBy(this.updatedUserId);
       });
