@@ -13,13 +13,7 @@ import { AuthService } from 'app/services/auth-service';
   styleUrls: ['./profile-main.component.scss'],
 })
 export class ProfileMainComponent implements OnInit {
-  // user!: UserInterface;
-
-  // private userId = 'd8679948-57c4-4d3e-a078-0aae6aa3f73a'
-
   user: any;
-
-
   constructor(private authService: AuthService, private userService: UserService,
     public dialog: MatDialog,) {}
 
@@ -37,7 +31,7 @@ export class ProfileMainComponent implements OnInit {
 
   onClickUpdatedUser(){
     const dialogRef = this.dialog.open(EditProfileComponent, {
-      height: '35vw',
+      height: '30vw',
       width: '60vw',
     })
 
