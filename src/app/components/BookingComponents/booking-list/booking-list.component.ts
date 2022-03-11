@@ -10,7 +10,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-
 import { BookingConfirmDialog } from '../booking-confirm-dialog/booking-confirm-dialog';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BookingDialogueComponent } from '../booking-dialogue/booking-dialogue.component';
@@ -23,6 +22,7 @@ import { BookingConnectionService } from 'app/services/booking.service';
   styleUrls: ['./booking-list.component.scss'],
 })
 export class BookingListComponent implements OnInit, OnChanges {
+  userId:string
   dummyArray: Booking[];
   bookingData: MatTableDataSource<Booking>;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -48,6 +48,10 @@ export class BookingListComponent implements OnInit, OnChanges {
     this.cdref.detectChanges();
   }
   ngAfterViewInit() {   
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.userId = JSON.parse(storedUser).id;
+    }
     this.refreshData();
     this.bookingData = new MatTableDataSource(this.dummyArray);
     this.bookingData.paginator = this.paginator;
@@ -73,12 +77,13 @@ export class BookingListComponent implements OnInit, OnChanges {
     dialogConfig.autoFocus = true;
     dialogConfig.height='80vh';
     dialogConfig.width='70vw';
-    dialogConfig.data={uuid:booking.uuid,roomid:booking.roomid,check_in_date:booking.check_in_date,check_out_date:booking.check_out_date}
+    dialogConfig.data={uuid:booking.uuid,roomid:booking.roomid,check_in_date:booking.check_in_date,check_out_date:booking.check_out_date,originalRoomId:booking.roomid}
     const dialogref = this.dialog.open(BookingDialogueComponent ,dialogConfig);
 
     dialogref.afterClosed().subscribe((result) => {
-      if (result) {
-        this.refreshData();
+      if (result[0]) {
+        console.log(result)
+        this.updateBooking(booking.uuid,result[1],result[2],result[3])
       }
     });
   }
@@ -120,7 +125,9 @@ export class BookingListComponent implements OnInit, OnChanges {
       this.bookingData.data = newData;
     });
   }
-
+  updateBooking(uuid:string,roomid:string,cInDate:Date,cOutDate:Date){
+    this.conn.updateBooking(uuid,roomid,cInDate,cOutDate).subscribe((data)=>{this.refreshData()})
+  }
   deleteBooking(uuid:string){
     this.conn.deleteBooking(uuid).subscribe((data)=>{this.refreshData()})
   }

@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BookingConnectionService, Room } from 'app/services/booking.service';
-import { FakeRoomService } from 'app/services/fake-room.service';
 export interface BookingIndata{
   uuid:string;
   roomid:string;
@@ -26,7 +25,6 @@ export class BookingDialogueComponent implements OnInit {
   
   constructor(private conn:BookingConnectionService,
               private cdref: ChangeDetectorRef,
-              private roomservice:FakeRoomService ,  
               @Inject(MAT_DIALOG_DATA) public indata: BookingIndata,
               public dialogRef: MatDialogRef<BookingDialogueComponent>){
     this.dateRange = new FormGroup({
@@ -45,6 +43,10 @@ export class BookingDialogueComponent implements OnInit {
     this.loadRooms()
     this.cdref.detectChanges()
   }
+  ngOnChanges(){
+    this.cdref.detectChanges()
+  }
+
 
  filter = (date: Date): boolean => {
   let res = [];
@@ -87,10 +89,12 @@ export class BookingDialogueComponent implements OnInit {
       this.conn.getRoomTimesheet(this.SelectedRoom.uuid).subscribe(
         (data)=>{
           this.SelectedRoomTimesheet=data;
-      })
+        
+        }
+      )
   }
 
   submitBooking(){
-    this.conn.updateBooking(this.indata.uuid,this.SelectedRoom.uuid,this.dateRange.value.start,this.dateRange.value.end).subscribe((data)=>this.dialogRef.close(true))
+    this.dialogRef.close([true,this.SelectedRoom.uuid,this.dateRange.value.start,this.dateRange.value.end])
   }
 }
