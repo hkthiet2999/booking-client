@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookingConfirmDialog } from '../BookingComponents/booking-confirm-dialog/booking-confirm-dialog';
 import { FakeRoomService } from 'app/services/fake-room.service';
 import { BookingConnectionService } from 'app/services/booking.service';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-bookingpage',
   templateUrl: './bookingpage.component.html',
@@ -21,10 +22,14 @@ export class BookingpageComponent implements OnInit {
     start: new FormControl('', Validators.required),
     end: new FormControl('', Validators.required),
   });
+  
+  public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   constructor(
     private param: ActivatedRoute,
-    private roomService: FakeRoomService,
+    private roomService: RoomService,
     private conn: BookingConnectionService,
     private cdref: ChangeDetectorRef,
     private router: Router,
@@ -38,9 +43,20 @@ export class BookingpageComponent implements OnInit {
     }
     this.roomId = this.param.snapshot.paramMap.get('roomId');
     if (this.roomId) {
-      this.roomData = this.roomService.roomList.filter((value) => {
-        return value.id === this.roomId;
+      this.isLoading$.next(true);
+      this.roomService.getRoomById(this.roomId).subscribe({
+        next: (res) => {
+          this.roomData = res;
+          console.log(res, 'by id');
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.isLoading$.next(false);
+        },
       });
+
       this.conn.getRoomTimesheet(this.roomId).subscribe((data) => {
         this.SelectedRoomTimesheet = data;
       });

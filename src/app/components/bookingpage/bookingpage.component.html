@@ -1,11 +1,17 @@
 <div class="container mt-5 mb-5">
   <div class="row">
+    <div class="col-lg-6"*ngIf="isLoading$ | async">
+      <div  style="width: 100%"><mat-spinner diameter="50"  class="spinner" ></mat-spinner></div>
+    </div>
     <div class="col-lg-6" *ngIf="roomData">
       <a routerLink="../../roommenu" class="btn btn-sm btn-dark mb-3">Back</a>
-      <img src="{{ roomData[0].images }}" width="100%" />
-      <h1 class="mt-3">{{ roomData[0].codeName }}</h1>
-      <p>isVacant: {{ roomData[0].isVacant }}</p>
-      <p>{{ roomData[0].price | currency: "USD" }}</p>
+      <app-carousel [data]="roomData.images" [isImages]="roomData.images?true:false"></app-carousel>
+      <div style="margin-top: 100px;margin-left: 100px;">
+        <h1>{{ roomData.codeName }}</h1>
+        <p>{{  roomData.price | currency: "USD" }}</p>
+        <p>Room size: {{  roomData.size }}</p>
+      </div>
+      
     </div>
 
     <div class="col-lg-6 col-12 form-container">
