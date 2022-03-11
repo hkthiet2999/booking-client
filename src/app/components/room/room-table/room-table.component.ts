@@ -41,24 +41,47 @@ export class RoomTableComponent implements OnInit {
     'action',
   ];
   dataSource = new MatTableDataSource<Room>(this.rooms);
-  constructor(public dialog: MatDialog, private roomService: RoomService) {}
+  initialized = false;
+
+  constructor(public dialog: MatDialog, private roomService: RoomService) {
+    this.roomService.getDataForRoomTable().subscribe({
+      next: (res: Response) => {
+        console.log(res, 'res');
+        this.rooms = res.data;
+        this.objData = res;
+        // this.dataSource = new MatTableDataSource<Room>(this.objData.data);
+        // this.paginator!.length = this.objData.total;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.isLoading$.next(false);
+      },
+    });
+  }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit(): void {
-    console.log(this.objData, 'trong table');
-    console.log(this.paginator, 'table');
-    this.objData.total;
+    // console.log(this.objData, 'trong table');
+    // console.log(this.paginator, 'table');
+    // this.objData.total;
+    this.initialized = true;
   }
   ngAfterViewInit() {
     console.log(this.paginator, 'viewInit');
-    this.paginator.length = this.objData.total;
+    if (this.objData?.total) {
+      this.paginator.length = this.objData.total;
+    }
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log(this.keyword, 'keyword ne');
     console.log(this.rooms, this.objData, 'onchange');
     console.log(this.paginator, 'table onchange');
-    this.dataSource = new MatTableDataSource<Room>(this.objData.data);
-    this.paginator.length = this.objData.total;
-    this.paginator.pageIndex = 0;
+    if (this.initialized) {
+      this.dataSource = new MatTableDataSource<Room>(this.objData.data);
+      this.paginator.length = this.objData.total;
+      this.paginator.pageIndex = 0;
+    }
   }
   selectImages(index: number) {
     this.selectedIndex = index;
