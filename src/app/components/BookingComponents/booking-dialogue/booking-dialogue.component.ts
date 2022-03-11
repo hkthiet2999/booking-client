@@ -91,6 +91,6 @@ export class BookingDialogueComponent implements OnInit {
   }
 
   submitBooking(){
-    this.conn.updateBooking(this.indata.uuid,this.SelectedRoom.uuid,this.dateRange.value.start,this.dateRange.value.end).subscribe((data)=>this.dialogRef.close(true))
+    this.dialogRef.close([true,this.SelectedRoom.uuid,this.dateRange.value.start,this.dateRange.value.end])
   }
 }
