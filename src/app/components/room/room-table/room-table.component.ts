@@ -110,6 +110,7 @@ export class RoomTableComponent implements OnInit {
         this.getAllPaginatedRoom({ page: page, limit: limit });
       },
       error: (err) => {
+        alert(err.toString());
         console.log(err);
       },
     });

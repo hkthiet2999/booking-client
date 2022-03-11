@@ -34,6 +34,7 @@ export class RoomComponent implements OnInit {
         console.log(res);
       },
       error: (err) => {
+        alert(err.toString());
         console.log(err);
       },
     });

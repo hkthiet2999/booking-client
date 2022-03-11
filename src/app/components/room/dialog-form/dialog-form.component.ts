@@ -129,6 +129,7 @@ export class DialogFormComponent implements OnInit {
           this.dialogRef.close('add');
         },
         error: (err) => {
+          alert(err.toString());
           console.log(err);
           this.dialogRef.close();
         },
@@ -147,6 +148,7 @@ export class DialogFormComponent implements OnInit {
           this.dialogRef.close('update');
         },
         error: (err) => {
+          alert(err.toString());
           console.log(err);
           this.dialogRef.close();
         },
