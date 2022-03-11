@@ -46,19 +46,22 @@ export class RoomTableComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.objData, 'trong table');
     console.log(this.paginator, 'table');
-    this.objData.total;
   }
   ngAfterViewInit() {
     console.log(this.paginator, 'viewInit');
-    this.paginator.length = this.objData.total;
+    if (this.paginator.length) {
+      this.paginator.length = this.objData.total;
+    }
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log(this.keyword, 'keyword ne');
     console.log(this.rooms, this.objData, 'onchange');
     console.log(this.paginator, 'table onchange');
-    this.dataSource = new MatTableDataSource<Room>(this.objData.data);
-    this.paginator.length = this.objData.total;
-    this.paginator.pageIndex = 0;
+    if (this.objData.data) {
+      this.dataSource = new MatTableDataSource<Room>(this.objData.data);
+      this.paginator.length = this.objData.total;
+      this.paginator.pageIndex = 0;
+    }
   }
   selectImages(index: number) {
     this.selectedIndex = index;
