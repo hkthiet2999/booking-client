@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeRoomService } from 'app/services/fake-room.service';
+import { RoomService } from 'app/services/room.service';
 
 @Component({
   selector: 'app-roommenu',
@@ -8,10 +8,22 @@ import { FakeRoomService } from 'app/services/fake-room.service';
 })
 export class RoommenuComponent implements OnInit {
   roomData: any;
-
-  constructor(private roomService: FakeRoomService) {}
+  selectedIndex = 0;
+  indicators: boolean = true;
+  constructor(private roomService: RoomService) {}
 
   ngOnInit(): void {
-    this.roomData = this.roomService.roomList;
+    this.roomService.getDataForHome().subscribe({
+      next: (res) => {
+        console.log(res, 'menu');
+        this.roomData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  selectImages(index: number) {
+    this.selectedIndex = index;
   }
 }

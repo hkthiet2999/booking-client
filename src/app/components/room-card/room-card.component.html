@@ -1,0 +1,16 @@
+<div class="foodbox"  >
+    <div *ngIf="!isImages" class="carouselContainer">
+        <img  src="https://vnreview.vn/06e6ee07d14482d31f3a.jpg"/>
+      </div>
+      <div *ngIf="isImages" class="carouselContainer"> 
+        <img *ngFor="let img of data.images; let i=index" [src]="img"  class="img fade" [ngClass]="{'imgActive': selectedIndex===i}"/>  
+        <div *ngIf="indicators" class="dotContainer">
+          <span *ngFor="let img of data.images;let i=index" class="dot" [ngClass]="{'active':selectedIndex===i}" (click)="selectImages(i)"></span>
+        </div> 
+      </div>
+      <div class="roomInfo">
+        <h1>{{ data.codeName }}</h1>
+        <p>{{ data.price | currency: "USD" }}</p>
+        <p>Room size: {{ data.size }}</p>
+      </div>
+  </div>

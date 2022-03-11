@@ -38,13 +38,8 @@
     Customers <span class="highlight">Favourites Room</span>
   </h1>
   <div class="row">
-    <div class="col-lg-3 mt-3" *ngFor="let rd of roomData; index as i">
-      <div class="foodbox" *ngIf="i <= 3">
-        <img src="{{ rd.images }}" />
-        <h1>{{ rd.codeName }}</h1>
-        <p>{{ rd.price | currency: "USD" }}</p>
-        <p>Room size: {{ rd.size }}</p>
-      </div>
+    <div class="col-lg-3 mt-3" *ngFor="let rd of roomData|slice:0:4; index as i">
+      <app-room-card [e]="i" [totalE]="3" [data]="rd" [isImages]="rd.images? true:false"></app-room-card>
     </div>
   </div>
   <a routerLink="roommenu" class="viewmorebtn"

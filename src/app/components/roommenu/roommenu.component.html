@@ -1,16 +1,10 @@
 <div class="container mt-5 mb-5">
   <div class="row">
-    <div class="col-lg-4" *ngFor="let rd of roomData">
-      <div class="foodbox mt-3 mb-3">
-        <img src="{{ rd.images }}" />
-        <h1>{{ rd.codeName }}</h1>
-        <p>Is vacant: {{ rd.isVacant }}</p>
-        <p>{{ rd.price | currency: "USD" }}</p>
-        <br />
+    <div class="col-lg-4 roomCard" *ngFor="let rd of roomData;let i as index" style="margin-bottom: 20px;">
+        <app-room-card [e]="i" [totalE]="14" [data]="rd" [isImages]="rd.images? true:false"></app-room-card>
         <a class="buybtn" [routerLink]="['/booking', rd.id]"
           >Book Now &nbsp;<i class="bi bi-bag"></i
         ></a>
-      </div>
     </div>
   </div>
 </div>

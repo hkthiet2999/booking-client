@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
-import { AdminComponent } from './components/admin/admin.component';
+
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { BookingpageComponent } from './components/bookingpage/bookingpage.component';

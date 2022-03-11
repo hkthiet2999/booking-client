@@ -5,9 +5,10 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingConfirmDialog } from '../BookingComponents/booking-confirm-dialog/booking-confirm-dialog';
-import { FakeRoomService } from 'app/services/fake-room.service';
+
 import { BookingConnectionService } from 'app/services/booking.service';
 import { BehaviorSubject } from 'rxjs';
+import { RoomService } from 'app/services/room.service';
 @Component({
   selector: 'app-bookingpage',
   templateUrl: './bookingpage.component.html',
