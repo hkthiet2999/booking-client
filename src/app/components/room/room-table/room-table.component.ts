@@ -44,8 +44,8 @@ export class RoomTableComponent implements OnInit {
   constructor(public dialog: MatDialog, private roomService: RoomService) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit(): void {
-    console.log(this.objData, 'trong table');
-    console.log(this.paginator, 'table');
+    // console.log(this.objData, 'trong table');
+    // console.log(this.paginator, 'table');
   }
   ngAfterViewInit() {
     console.log(this.paginator, 'viewInit');
