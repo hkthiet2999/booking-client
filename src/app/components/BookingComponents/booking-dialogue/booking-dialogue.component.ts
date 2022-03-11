@@ -89,7 +89,9 @@ export class BookingDialogueComponent implements OnInit {
       this.conn.getRoomTimesheet(this.SelectedRoom.uuid).subscribe(
         (data)=>{
           this.SelectedRoomTimesheet=data;
-        
+          if (this.SelectedRoom.uuid==this.indata.roomid){
+             this.SelectedRoomTimesheet=this.SelectedRoomTimesheet.filter((element)=> element.toString()!=this.indata.check_in_date.toString()||element.toString()!=this.indata.check_in_date.toString())
+          }
         }
       )
   }
