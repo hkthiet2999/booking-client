@@ -7,12 +7,11 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-let user = JSON.parse(JSON.stringify(localStorage.getItem('user')));
-let token = JSON.parse(user).access_token;
-let headers = new HttpHeaders()
-  .set('Content-Type', 'application/json')
-  .set('Authorization', `Bearer ${token}`);
-let headers1 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+// let user = JSON.parse(JSON.stringify(localStorage.getItem('user')));
+// let token = JSON.parse(user).access_token;
+let headers = new HttpHeaders().set('Content-Type', 'application/json');
+//   .set('Authorization', `Bearer ${token}`);
+// let headers1 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 export interface Room {
   id?: string;
   codeName: string;
@@ -42,6 +41,12 @@ export class Pagination {
 export class RoomService {
   constructor(private http: HttpClient) {}
   private url: string = 'http://localhost:3000/rooms';
+  getDataForHome(): Observable<Response> {
+    return this.http.get<Response>(this.url);
+  }
+  getRoomById(roomId: string): Observable<Room> {
+    return this.http.get<Room>(`${this.url}/${roomId}`);
+  }
   getDataForRoomTable(pagination?: Pagination): Observable<Response> {
     if (pagination) {
       if (pagination.keyword !== undefined) {
@@ -79,7 +84,6 @@ export class RoomService {
       `${this.url}/images/${roomId}`,
       formData,
       {
-        headers: headers1,
         reportProgress: true,
         responseType: 'json',
       }

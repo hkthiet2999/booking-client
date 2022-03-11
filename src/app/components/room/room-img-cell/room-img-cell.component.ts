@@ -9,6 +9,5 @@ export class RoomImgCellComponent implements OnInit {
   @Input() imgSrc: string;
   @Input() isActive: boolean = false;
   constructor() {}
-
   ngOnInit(): void {}
 }

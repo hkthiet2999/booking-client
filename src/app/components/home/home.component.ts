@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { FakeRoomService } from 'src/app/services/fake-room.service';
+import { RoomService } from 'src/app/services/room.service';
 import { User } from 'src/app/_model/user';
 import { AuthService } from '../../services/auth-service';
 
@@ -13,12 +14,11 @@ import { AuthService } from '../../services/auth-service';
 export class HomeComponent {
   loading = false;
   user: User;
-  roomData: any;
-
+  roomData: any[];
   constructor(
     private authenticationService: AuthService,
     private router: Router,
-    private roomService: FakeRoomService,
+    private roomService: RoomService
   ) {
     this.user = this.authenticationService.userValue;
   }
@@ -32,9 +32,15 @@ export class HomeComponent {
     //       this.user = user;
     //     }
     //   });
-    this.roomData = this.roomService.roomList;
+    this.roomService.getDataForHome().subscribe({
+      next: (res: any) => {
+        this.roomData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
-
   login() {
     this.router.navigate(['/login']);
   }

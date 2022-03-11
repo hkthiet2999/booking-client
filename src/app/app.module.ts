@@ -65,6 +65,8 @@ import { RoomTableComponent } from './components/room/room-table/room-table.comp
 import { RoomImgCellComponent } from './components/room/room-img-cell/room-img-cell.component';
 import { DialogFormComponent } from './components/room/dialog-form/dialog-form.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { RoomCardComponent } from './components/room-card/room-card.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     RoomImgCellComponent,
     DialogFormComponent,
     SidenavComponent,
+    RoomCardComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,
