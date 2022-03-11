@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       const password = this.password.value;
       this.authService.login(email, password).pipe(first()).subscribe({
         next: () => {    
-            this.router.navigate(['/home']);
+            this.router.navigate(['/']);
         },
         error: error => {
             console.log(error)
