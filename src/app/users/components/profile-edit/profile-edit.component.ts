@@ -13,7 +13,6 @@ interface GenderOptions {
   styleUrls: ['./profile-edit.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
-  // @Input() user: any;
 
   user: any;
   userId: any;

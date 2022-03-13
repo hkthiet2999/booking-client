@@ -8,6 +8,7 @@
             <div class="user-avatar-container">
               <div mat-card-avatar class="user-avatar">
                 <img
+                *ngIf="user"
                   [src]="
                     user.avatarUrl
                       ? user.avatarUrl
@@ -18,14 +19,14 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="user.id">
+          <div class="row" *ngIf="user">
             <mat-divider></mat-divider>
             <div mat-subheader>User ID</div>
             <mat-list>
               <mat-list-item>
                 <mat-icon>info</mat-icon>
                 <div mat-line>
-                  <p>{{ user.id }}</p>
+                  <p *ngIf="user.id">{{ user.id }}</p>
                 </div>
               </mat-list-item>
             </mat-list>
@@ -38,57 +39,57 @@
       <div class="card">
         <div class="card-body">
           <mat-list>
-            <div *ngIf="user.email">
+            <div *ngIf="user">
               <mat-divider></mat-divider>
               <div mat-subheader>Email</div>
               <mat-list-item>
                 <mat-icon> email</mat-icon>
                 <div mat-line>
-                  <p>{{ user.email }}</p>
+                  <p *ngIf="user.email">{{ user.email }}</p>
                 </div>
               </mat-list-item>
             </div>
 
-            <div *ngIf="user.firstname">
+            <div *ngIf="user">
               <mat-divider></mat-divider>
               <div mat-subheader>Firstname</div>
               <mat-list-item>
                 <mat-icon>account_box</mat-icon>
                 <div mat-line>
-                  <p>{{ user.firstname }}</p>
+                  <p *ngIf="user.firstname">{{ user.firstname }}</p>
                 </div>
               </mat-list-item>
             </div>
 
-            <div *ngIf="user.lastname">
+            <div *ngIf="user">
               <mat-divider></mat-divider>
               <div mat-subheader>Lastname</div>
               <mat-list-item>
                 <mat-icon>perm_contact_calendar</mat-icon>
                 <div mat-line>
-                  <p>{{ user.lastname }}</p>
+                  <p *ngIf="user.lastname">{{ user.lastname }}</p>
                 </div>
               </mat-list-item>
             </div>
 
-            <div *ngIf="user.gender">
+            <div *ngIf="user">
               <mat-divider></mat-divider>
               <div mat-subheader>Gender</div>
               <mat-list-item>
                 <mat-icon>face</mat-icon>
                 <div mat-line>
-                  <p>{{ user.gender }}</p>
+                  <p *ngIf="user.gender">{{ user.gender }}</p>
                 </div>
               </mat-list-item>
             </div>
 
-            <div *ngIf="user.dateOfBirth">
+            <div *ngIf="user">
               <mat-divider></mat-divider>
               <div mat-subheader>Birthday</div>
               <mat-list-item>
                 <mat-icon>date_range</mat-icon>
                 <div mat-line>
-                  <p>{{ user.dateOfBirth | date }}</p>
+                  <p *ngIf="user.dateOfBirth">{{ user.dateOfBirth | date }}</p>
                 </div>
               </mat-list-item>
             </div>

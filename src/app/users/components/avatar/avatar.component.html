@@ -1,8 +1,4 @@
-<!-- <div class="user-avatar-container">
-    <div mat-card-avatar class="user-avatar"></div>
-</div> -->
-
-<div class="user-avatar-container">
+<div class="user-avatar-container" *ngIf="user">
   <div mat-card-avatar class="user-avatar">
     <label class="hoverable">
       <div [style.display]="!isPreview ? 'block' : 'none'">

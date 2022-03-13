@@ -9,14 +9,14 @@
     >
       <mat-card class="user-info-container">
 
-        <user-avatar [user]="user"></user-avatar>
+        <user-avatar *ngIf="user" [user]="user"></user-avatar>
 
         <div class="user-title-container">
           <div class="matero-row">
-            <mat-card-title
+            <mat-card-title *ngIf="user"
               >{{ user.firstname }}&nbsp;{{ user.lastname }}</mat-card-title
             >
-            <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="user">{{ user.email }}</mat-card-subtitle>
           </div>
         </div>
       </mat-card>
@@ -30,7 +30,7 @@
     >
       <mat-card class="user-info">
         <div>
-          <profile-view-details [user]="user"></profile-view-details>
+          <profile-view-details *ngIf="user" [user]="user"></profile-view-details>
         </div>
 
         <table class="action-buttons" cellspacing="10">

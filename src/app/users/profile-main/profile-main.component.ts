@@ -1,5 +1,5 @@
 import { UserService } from './../services/user.services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { UserInterface } from '../users.interface';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -13,22 +13,17 @@ import { AuthService } from 'app/services/auth-service';
   styleUrls: ['./profile-main.component.scss'],
 })
 export class ProfileMainComponent implements OnInit {
-  // user!: UserInterface;
-
-  // private userId = 'd8679948-57c4-4d3e-a078-0aae6aa3f73a'
 
   user: any;
-
+  userValue!: any;
 
   constructor(private authService: AuthService, private userService: UserService,
     public dialog: MatDialog,) {}
 
   ngOnInit() {
-    this.user = this.authService.userValue;
-
-    console.log('Get User:', this.user);
+    this.userValue = this.authService.userValue;
     this.userService
-      .findUserBy(this.user.id)
+      .findUserBy(this.userValue.id)
       .subscribe((data: any) => {
         console.log(data);
         this.user = data;
@@ -43,7 +38,7 @@ export class ProfileMainComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.userService
-      .findUserBy(this.user.id)
+      .findUserBy(this.userValue.id)
       .subscribe((data: any) => {
         console.log(data);
         this.user = data;

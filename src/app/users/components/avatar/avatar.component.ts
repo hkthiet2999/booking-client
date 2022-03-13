@@ -1,5 +1,5 @@
 import { UserService } from './../../services/user.services';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { AuthService } from 'app/services/auth-service';
 export interface File {
   data: any;
@@ -14,8 +14,9 @@ export interface File {
 })
 export class AvatarComponent implements OnInit {
   @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
-  @Input() user: any
+  @Input() user: any;
   filePath!: string;
+  userValue!: any;
   
 
   imagePath: any;
@@ -27,6 +28,7 @@ export class AvatarComponent implements OnInit {
     progress: 0,
   };
 
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -34,9 +36,15 @@ export class AvatarComponent implements OnInit {
 
   ngOnInit(
   ): void{
-    this.user = this.authService.userValue
+    this.userValue = this.authService.userValue
 
   }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   this.userValue = this.authService.userValue
+  // }
+
+
   isPreview = false
   isSave = false;
   onSave() {
@@ -52,25 +60,32 @@ export class AvatarComponent implements OnInit {
     const fileInput = this.fileUpload.nativeElement;
     fileInput.click();
     fileInput.onchange = () => {
-      this.file = {
-        data: fileInput.files[0],
-        inProgress: false,
-        progress: 0,
-      };
-      this.fileUpload.nativeElement.value = '';
-      this.isSave = !this.isSave;
+      if(fileInput.files[0]){
 
-      let reader = new FileReader();
+        this.file = {
+          data: fileInput.files[0],
+          inProgress: false,
+          progress: 0,
+        };
+        
+        this.isSave = !this.isSave;
+  
+        let reader = new FileReader();
+  
+        
+        reader.onload = (_event) => { 
+          this.imgSrc = reader.result; 
+        }
+        reader.readAsDataURL(this.file.data); 
+  
+        this.isPreview = !this.isPreview
+        console.log(this.imgSrc);
 
-      reader.readAsDataURL(this.file.data); 
-      reader.onload = (_event) => { 
-        this.imgSrc = reader.result; 
       }
 
-      this.isPreview = !this.isPreview
-      console.log(this.imgSrc);
 
     };
+    this.fileUpload.nativeElement.value = '';
   }
 
   async uploadFile() {
@@ -80,9 +95,9 @@ export class AvatarComponent implements OnInit {
 
     this.userService.updateAvatar(
       formData,
-      this.user.id
+      this.userValue.id
     ).subscribe((data) => {
-      return this.userService.findUserBy(this.user.id)
+      return this.userService.findUserBy(this.userValue.id)
     });
 
   }

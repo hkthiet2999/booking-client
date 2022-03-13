@@ -35,7 +35,7 @@ export class UserService {
       }),
       catchError( (res) => {
         // console.log('RES:', res);
-        this._snackBar.open(`Update Fail! ${res.error.message}`, 'Close', {
+        this._snackBar.open(`Update Fail! ${res}`, 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top'
@@ -47,7 +47,7 @@ export class UserService {
 
   setUploadAvatar(isUploadAvatar: boolean) {
     this.isUploadAvatar$$.next(isUploadAvatar);
-    console.log('isUpload:', this.isUploadAvatar$);
+    console.log('isUploadAvatar:', this.isUploadAvatar$);
   }
 
   updateAvatar(formData: FormData, id: string) {
@@ -72,7 +72,7 @@ export class UserService {
       }),
       catchError( (res) => {
         this.setUploadAvatar(true);
-        this._snackBar.open(`Uploads Fail: ${res.error.message}`, 'Close', {
+        this._snackBar.open(`Uploads Fail: ${res}`, 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',

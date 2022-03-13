@@ -4,12 +4,13 @@
   [matMenuTriggerFor]="menu"
 >
   <img
+  *ngIf="user"
     class="matero-avatar"
     [src]="
       user.avatarUrl ? user.avatarUrl : 'assets/images/user-null-avatar.png'
     "
   />
-  <span class="matero-username" fxHide.lt-sm>{{user.firstname}}</span>
+  <span *ngIf="user" class="matero-username" fxHide.lt-sm>{{user.firstname}}</span>
 
 </button>
 
