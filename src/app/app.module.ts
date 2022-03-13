@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
 import { UsersModule } from './users/users.module';
 import { CommonComponentsModule } from './common/common-components.module';
 import { UserLayoutComponent } from './layouts/user/user-layout/user-layout.component';
@@ -35,6 +34,7 @@ import { RoomImgCellComponent } from './components/room/room-img-cell/room-img-c
 import { DialogFormComponent } from './components/room/dialog-form/dialog-form.component';
 import { RoomCardComponent } from './components/room-card/room-card.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [

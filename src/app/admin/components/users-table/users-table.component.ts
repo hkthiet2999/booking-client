@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -28,7 +29,8 @@ export class UsersTableComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   usersAPI: any;
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(private adminService: AdminService, public dialog: MatDialog,
+    private location: Location) {}
 
   ngOnInit() {
     this.adminService.getAllUsers().subscribe(async (data: any) => {
@@ -90,6 +92,9 @@ export class UsersTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
     
+  }
+  backToDashboard(){
+    this.location.back()
   }
 }
 
