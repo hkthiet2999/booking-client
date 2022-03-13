@@ -1,0 +1,54 @@
+<div class="mat-elevation-z8">
+    <mat-spinner diameter="50" *ngIf="isLoading$ | async" class="spinner" ></mat-spinner>
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="roomName">
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Room name </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.codeName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="size" >
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Size </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.size.toUpperCase()}} </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Price </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;">$ <span [ngStyle]="{color:'rgb(74, 204, 74)'}">{{element.price}}</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="images">
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Images </th>
+          <td mat-cell *matCellDef="let element"><div class="carouselContainer"> 
+            <app-room-img-cell *ngFor="let img of element.images; let i=index" [imgSrc]="img" [isActive]="selectedIndex===i ? true:false"> </app-room-img-cell> 
+            <div *ngIf="indicators" class="dotContainer">
+              <span *ngFor="let img of element.images;let i=index" class="dot" [ngClass]="{'active':selectedIndex===i}" (click)="selectImages(i)"></span>
+            </div> 
+          </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Status </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> <span class="tagStatusReady" *ngIf="element.isVacant">Ready</span> <span class="tagStatusOccupied" *ngIf="!element.isVacant">Occupied</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="columnWidth"> Action</th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+            <button mat-icon-button color="primary" (click)="editRoom(element)"  >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button  mat-icon-button  color="warn" (click)="deleteRoom(element.id)" >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+      <div class="paginatorContainer">
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                     showFirstLastButtons 
+                     (page)="reloadTable($event)"
+                     pageSize="reloadTable($event)"
+                     aria-label="Select page of room list">
+      </mat-paginator>
+      </div>
+    </div>

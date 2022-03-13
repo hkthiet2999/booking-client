@@ -1,0 +1,53 @@
+<div class="matero-content">
+  <div fxLayout="row wrap" class="matero-row">
+    <div
+      class="matero-col user-view-card"
+      fxflex="100"
+      fxflex.gt-xs="50"
+      fxflex.gt-sm="33.33"
+      fxflex.gt-md="25"
+    >
+      <mat-card class="user-info-container">
+
+        <user-avatar *ngIf="user" [user]="user"></user-avatar>
+
+        <div class="user-title-container">
+          <div class="matero-row">
+            <mat-card-title *ngIf="user"
+              >{{ user.firstname }}&nbsp;{{ user.lastname }}</mat-card-title
+            >
+            <mat-card-subtitle *ngIf="user">{{ user.email }}</mat-card-subtitle>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div
+      class="matero-col user-details-card"
+      fxflex="100"
+      fxflex.gt-xs="50"
+      fxflex.gt-sm="66.67"
+      fxflex.gt-md="75"
+    >
+      <mat-card class="user-info">
+        <div>
+          <profile-view-details *ngIf="user" [user]="user"></profile-view-details>
+        </div>
+
+        <table class="action-buttons" cellspacing="10">
+          <tr>
+            <td>
+              <button mat-stroked-button color="primary" (click)="onClickUpdatedUser()">
+                <span >Update Profile</span>
+              </button>
+            </td>
+            <td>
+              <button mat-stroked-button color="primary">
+                <span>Change Password</span>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+    </div>
+  </div>
+</div>

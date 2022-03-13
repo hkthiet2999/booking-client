@@ -1,0 +1,29 @@
+.matero-toolbar-button {
+    &.mat-button,
+    &.mat-icon-button {
+      margin: 0 4px;
+    }
+  
+    &.mat-button {
+      min-width: unset;
+      line-height: 40px;
+      border-radius: 50rem;
+    }
+  
+    &.matero-avatar-button {
+      display: block;
+      padding: 0 4px;
+      font-size: 0;
+  
+      .matero-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50rem;
+      }
+  
+      .matero-username {
+        margin: 0 8px;
+        font-size: 14px;
+      }
+    }
+  }

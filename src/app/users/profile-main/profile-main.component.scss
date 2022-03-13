@@ -1,0 +1,51 @@
+
+@import '../../../style/variables';
+
+.user-view-card {
+  flex: 1 1 35%;
+  box-sizing: border-box;
+  max-width: 35%;
+
+  .user-info-container {
+    text-align: center;
+    .user-title-container {
+      margin-top: 32px;
+      width: 100%;
+      padding-top: 16px;
+    }
+  }
+}
+
+.user-details-card {
+  flex: 1 1 75%;
+  box-sizing: border-box;
+  max-width: 65%;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+
+// TODO: Grid row
+.matero-row {
+  margin-right: $gutter * -0.5;
+  margin-left: $gutter * -0.5;
+}
+
+// TODO: Grid col
+.matero-col {
+  padding-right: $gutter * 0.5;
+  padding-left: $gutter * 0.5;
+}
+
+.matero-content {
+  position: relative;
+  padding: $gutter;
+}
+
+.mat-card{
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}

@@ -1,0 +1,48 @@
+<div class="banner">
+  <div class="content">
+    <h1 class="mb-5">Room Booking.</h1>
+    <a routerLink="roommenu">BOOK NOW <i class="bi bi-arrow-right"></i></a>
+  </div>
+</div>
+<!-- step  -->
+<div class="container mt-5 mb-5">
+  <h1 class="text-center">How to get <span class="highlight">A ROOM</span></h1>
+  <div class="row mt-5">
+    <!-- one  -->
+    <div class="col-lg-4 mt-2">
+      <div class="stepBox">
+        <h1>1</h1>
+        <p>select room</p>
+      </div>
+    </div>
+    <!-- two -->
+    <div class="col-lg-4 mt-2">
+      <div class="stepBox">
+        <h1>2</h1>
+        <p>fill the details</p>
+      </div>
+    </div>
+    <!-- three  -->
+    <div class="col-lg-4 mt-2">
+      <div class="stepBox">
+        <h1>3</h1>
+        <p>your order delivered in minute</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- foodbox  -->
+<div class="container mt-4 mb-4">
+  <h1 class="text-center">
+    Customers <span class="highlight">Favourites Room</span>
+  </h1>
+  <div class="row">
+    <div class="col-lg-3 mt-3" *ngFor="let rd of roomData|slice:0:4; index as i">
+      <app-room-card [e]="i" [totalE]="3" [data]="rd" [isImages]="rd.images? true:false"></app-room-card>
+    </div>
+  </div>
+  <a routerLink="roommenu" class="viewmorebtn"
+    >view more <i class="bi bi-arrow-right"></i
+  ></a>
+</div>

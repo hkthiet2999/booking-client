@@ -1,0 +1,4 @@
+<div class="roomTableContainer">
+    <app-room-header (onAddNewRoom)="reloadTableData($event)" (onSearchRoom)="searchRoom($event)"></app-room-header>
+    <app-room-table [rooms]="rooms" [keyword]="keyword" [objData]="objData"></app-room-table>
+</div>

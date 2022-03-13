@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+.tableColumn {
+  float: left;
+  width: 70%;
+}
+.detailColumn {
+  float: right;
+  width: 30%;
+}
+
+h1 {
+  text-align: center;
+  color: red;
+  font-family: "Brush Script MT", cursive;
+}
+
+.row {
+  display: flex;
+  height: auto;
+  padding: 12px;
+}
+.row:after {
+  clear: both;
+}
+
+// mat-grid-tile {
+//   background: lightblue;
+// }
+// mat-grid-list{
+//     width: 80vw;
+//     height: 100vh;
+
+//     align-items: center;
+//     justify-content: center;
+// }

@@ -1,0 +1,106 @@
+<h2 mat-dialog-title>Create User</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="form-container">
+    <form [formGroup]="formCreateUser" (ngSubmit)="onCreateUser(formCreateUser)">
+      <mat-form-field class="input-field-container" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Enter the user's email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="email.touched && email.hasError('required')"
+          >Email is required</mat-error
+        >
+        <mat-error *ngIf="email.touched && email.hasError('email')"
+          >Email must be valid</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Enter the user's first name"
+          formControlName="firstname"
+        />
+        <mat-error *ngIf="firstname.touched && firstname.hasError('required')"
+          >First Name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Enter the user's last name"
+          formControlName="lastname"
+        />
+        <mat-error *ngIf="lastname.touched && lastname.hasError('required')"
+          >Last Name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="password.touched && password.hasError('required')"
+          >Password is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="input-field-container" appearance="outline">
+        <mat-label>Password Confirmation</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter password again"
+          formControlName="passwordConfirm"
+        />
+        <mat-error
+          *ngIf="
+            passwordConfirm.touched &&
+            formCreateUser.hasError('passwordsNotMatching')
+          "
+          ><small>Passwords are not matching</small></mat-error
+        >
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <div fxLayout="row" fxLayoutGap="24px">
+          <div>
+            <mat-hint *ngIf="!formCreateUser.valid"
+              ><small>Please fill out all needed information</small></mat-hint
+            >
+          </div>
+
+          <div>
+            <button
+              mat-raised-button
+              type="submit"
+              color="accent"
+              [disabled]="!formCreateUser.valid"
+              mat-dialog-close
+            >
+              Create User
+            </button>
+          </div>
+
+          <div>
+            <button mat-raised-button mat-dialog-close color="primary">
+              Cancle
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

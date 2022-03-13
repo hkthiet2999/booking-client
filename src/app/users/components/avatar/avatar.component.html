@@ -1,0 +1,46 @@
+<div class="user-avatar-container" *ngIf="user">
+  <div mat-card-avatar class="user-avatar">
+    <label class="hoverable">
+      <div [style.display]="!isPreview ? 'block' : 'none'">
+        <img
+          [src]="
+            user.avatarUrl
+              ? user.avatarUrl
+              : 'assets/images/user-null-avatar.png'
+          "
+        />
+      </div>
+
+      <div [style.display]="isPreview ? 'block' : 'none'">
+        <img [src]="imgSrc" />
+      </div>
+      <div class="hover-text">
+        <button mat-button color="warn" (click)="onClick()">
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+      </div>
+      <div class="background"></div>
+    </label>
+
+    <input
+      type="file"
+      #fileUpload
+      id="fileUpload"
+      name="fileUpload"
+      accept="image/*"
+      style="display: none"
+    />
+  </div>
+</div>
+<br />
+<div [style.display]="isSave ? 'block' : 'none'">
+  <button
+    mat-stroked-button 
+    color="primary"
+    type="button"
+    mdbWavesEffect
+    (click)="onSave()"
+  >
+    Save
+  </button>
+</div>

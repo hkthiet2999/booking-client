@@ -1,0 +1,15 @@
+<div *ngIf="!isImages" class="carouselContainer">
+    <img  src="https://vnreview.vn/06e6ee07d14482d31f3a.jpg"/>
+  </div>
+  <div *ngIf="isImages" class="carouselContainer"> 
+    <img *ngFor="let img of data; let i=index" [src]="img"  class="img fade" [ngClass]="{'imgActive': selectedIndex===i}"/>  
+    <div *ngIf="indicators" class="dotContainer">
+      <img *ngFor="let img of data;let i=index" [src]="img" class="dot" [ngClass]="{'active':selectedIndex===i}" (click)="selectImages(i)"/>
+    </div> 
+    <button *ngIf="controls" class="btnCarousel btnPrev" (click)="onPrevClick()">
+        <mat-icon>skip_previous</mat-icon>
+    </button>
+    <button *ngIf="controls" class="btnCarousel btnNext" (click)="onNextClick()">
+        <mat-icon>skip_next</mat-icon>
+    </button>
+  </div>
