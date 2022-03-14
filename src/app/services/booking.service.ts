@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, ReplaySubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {catchError, Observable, ReplaySubject, tap, throwError } from 'rxjs';
 import { Booking, BookingDTO, createBookingDTO } from '../_model/booking.model';
 declare const Zone: any;
 
 @Injectable()
 export class BookingConnectionService {
-  constructor(private http: HttpClient) {}
-   port = 3000
-   rootURL=`http://localhost:${this.port}/`
-  
+  constructor(private http: HttpClient,private _snackbar :MatSnackBar) {}
+  port = 3000
+  rootURL=`http://localhost:${this.port}/`
   
   private currentBooking: ReplaySubject<Booking> = new ReplaySubject();
 
@@ -79,6 +79,23 @@ export class BookingConnectionService {
       `${this.rootURL}booking/`,
       object,
       httpOptions
+    ).pipe(
+      tap(() =>
+        this._snackbar.open('Created Booking', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        })
+      ),
+      catchError((e) => {
+        console.log(e);
+        this._snackbar.open(`Booking creation Failed: ${e}`, 'Close', {
+          duration: 4500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+        return throwError(e);
+      })
     );
   }
 
@@ -90,6 +107,23 @@ export class BookingConnectionService {
     return this.http.delete(
       `${this.rootURL}booking/${bookinguuid}`,
       httpOptions
+    ).pipe(
+      tap(() =>
+        this._snackbar.open('Delete Successful', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        })
+      ),
+      catchError((e) => {
+        console.log(e);
+        this._snackbar.open(`Delete Failed: ${e}`, 'Close', {
+          duration: 4500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+        return throwError(e);
+      })
     )
     ;
   }
@@ -106,7 +140,24 @@ export class BookingConnectionService {
       `${this.rootURL}booking/${uuid}`,
       object,
       httpOptions
-    )
+    ).pipe(
+      tap(() =>
+        this._snackbar.open('Update Successful', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        })
+      ),
+      catchError((e) => {
+        console.log(e);
+        this._snackbar.open(`Update Failed: ${e}`, 'Close', {
+          duration: 4500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+        return throwError(e);
+      })
+    );
   }
 
 

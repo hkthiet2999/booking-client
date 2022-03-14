@@ -95,6 +95,7 @@ export class BookingpageComponent implements OnInit {
   }
 
   openDialog() {
+    console.log(this.roomData)
     const days =
       (this.dateRange.value.end - this.dateRange.value.start) /
       (1000 * 60 * 60 * 24);
@@ -105,9 +106,9 @@ export class BookingpageComponent implements OnInit {
         startdate: this.dateRange.value.start,
         enddate: this.dateRange.value.end,
         roomid: this.roomId,
-        pricePerDay: this.roomData[0].price,
+        pricePerDay: this.roomData.price,
         days: days,
-        genericRoomData: this.roomData[0],
+        genericRoomData: this.roomData,
       },
     });
 
