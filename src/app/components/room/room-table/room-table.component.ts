@@ -9,7 +9,12 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { IResponse, Pagination, Room, RoomService } from 'app/services/room.service';
+import {
+  IResponse,
+  Pagination,
+  Room,
+  RoomService,
+} from 'app/services/room.service';
 import { BehaviorSubject } from 'rxjs';
 
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
@@ -111,7 +116,6 @@ export class RoomTableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'update') {
-        alert('The room has been updated');
         let page = this.paginator.pageIndex + 1;
         let limit = this.paginator.pageSize;
         this.getAllPaginatedRoom({ page: page, limit: limit });
@@ -123,7 +127,6 @@ export class RoomTableComponent implements OnInit {
     this.roomService.deleteRoom(roomId).subscribe({
       next: (res) => {
         console.log(res);
-        alert('The room has been deleted');
         let page = this.paginator.pageIndex + 1;
         let limit = this.paginator.pageSize;
         this.getAllPaginatedRoom({ page: page, limit: limit });
