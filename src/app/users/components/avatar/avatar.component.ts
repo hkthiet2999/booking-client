@@ -13,7 +13,7 @@ export interface File {
   styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-  @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
+  @ViewChild('fileUpload') fileUpload!: ElementRef;
   @Input() user: any;
   filePath!: string;
   userValue!: any;
@@ -53,6 +53,10 @@ export class AvatarComponent implements OnInit {
     // window.location.reload();
   }
 
+  onCancel(){
+    this.isSave = false;
+    this.isPreview = false;
+  }
 
   onCancle() {}
 
@@ -68,7 +72,7 @@ export class AvatarComponent implements OnInit {
           progress: 0,
         };
         
-        this.isSave = !this.isSave;
+        this.isSave = true;
   
         let reader = new FileReader();
   
@@ -78,7 +82,7 @@ export class AvatarComponent implements OnInit {
         }
         reader.readAsDataURL(this.file.data); 
   
-        this.isPreview = !this.isPreview
+        this.isPreview = true;
         console.log(this.imgSrc);
 
       }

@@ -12,10 +12,10 @@
   }
 }
 
-// .panel-override{
-//   // max-height: 30px !important;
-//   background-color: aqua !important;
-// }
+.disabledInput{
+  color: #000000de;
+  text-transform: capitalize;
+}
 
 ::ng-deep .mat-select-content{
   height:2000px;

@@ -13,7 +13,7 @@
 
         <div class="user-title-container">
           <div class="matero-row">
-            <mat-card-title *ngIf="user"
+            <mat-card-title *ngIf="user" style="text-transform: capitalize;"
               >{{ user.firstname }}&nbsp;{{ user.lastname }}</mat-card-title
             >
             <mat-card-subtitle *ngIf="user">{{ user.email }}</mat-card-subtitle>
@@ -33,20 +33,11 @@
           <profile-view-details *ngIf="user" [user]="user"></profile-view-details>
         </div>
 
-        <table class="action-buttons" cellspacing="10">
-          <tr>
-            <td>
-              <button mat-stroked-button color="primary" (click)="onClickUpdatedUser()">
-                <span >Update Profile</span>
-              </button>
-            </td>
-            <td>
-              <button mat-stroked-button color="primary">
-                <span>Change Password</span>
-              </button>
-            </td>
-          </tr>
-        </table>
+        <div class="action-buttons" >
+          <button mat-stroked-button color="primary" (click)="onClickUpdatedUser()">
+            <span >Update Profile</span>
+          </button>
+        </div>
       </mat-card>
     </div>
   </div>
