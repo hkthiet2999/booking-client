@@ -95,36 +95,36 @@ export class DialogFormComponent implements OnInit {
     return dirtyValues;
   }
   uploadFiles(): void {
-    this.message = [];
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.uploadedList[i]);
-        this.uploadedList.slice(i, 1);
-      }
-    }
+    // this.message = [];
+    // if (this.selectedFiles) {
+    //   for (let i = 0; i < this.selectedFiles.length; i++) {
+    //     this.upload(i, this.uploadedList[i]);
+    //     this.uploadedList.slice(i, 1);
+    //   }
+    // }
   }
-  upload(idx: number, file: File): void {
-    console.log(this.roomId, 'haha');
+  async upload(idx: number, file: File, roomId: string) {
     this.progressInfos[idx] = { value: 0, fileName: file.name };
     if (file) {
-      this.roomService.uploadRoomImages(this.roomId, file).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
+      await this.roomService.uploadRoomImages(roomId, file).subscribe({
+        next: (event) => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
             this.progressInfos[idx].value = Math.round(
               (100 * event.loaded) / event.total
             );
+            // .close('add');
           } else if (event instanceof HttpResponse) {
             const msg = 'Uploaded the file successfully: ' + file.name;
             this.message.push(msg);
             // this.imageInfos = this.s.getFiles();
           }
         },
-        (err: any) => {
+        error: (error) => {
           this.progressInfos[idx].value = 0;
           const msg = 'Could not upload the file: ' + file.name;
           this.message.push(msg);
-        }
-      );
+        },
+      });
     }
   }
   constructor(
@@ -153,10 +153,22 @@ export class DialogFormComponent implements OnInit {
     console.log(this.roomForm.value);
     if (this.roomForm.valid) {
       this.roomService.createRoom(this.roomForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
+        next: async (res) => {
+          console.log('Room res:', res);
+          if (this.selectedFiles) {
+            for (let i = 0; i < this.selectedFiles.length; i++) {
+              await this.upload(i, this.uploadedList[i], res.id as string);
+              this.uploadedList.slice(i, 1);
+            }
+          }
           this.roomForm.reset();
           this.dialogRef.close('add');
+          this.dialogRef.afterClosed().subscribe(() => {
+            window.location.reload();
+          });
+
+          // this.roomForm.reset();
+          // this.dialogRef.close('add');
         },
         error: (err) => {
           alert(err.toString());
