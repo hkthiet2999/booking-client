@@ -25,7 +25,10 @@ export interface DialogData {
     images: string[];
   };
 }
-
+export interface temp {
+  fileName: string;
+  hashedFile: string;
+}
 @Component({
   selector: 'app-dialog-form',
   templateUrl: './dialog-form.component.html',
@@ -42,19 +45,25 @@ export class DialogFormComponent implements OnInit {
   message: string[] = [];
   previews: string[] = [];
   imageInfos?: Observable<any>;
+  tempList: temp[];
+  uploadedList: any;
   selectFiles(event: any): void {
     console.log(event.target.files);
     this.message = [];
     this.progressInfos = [];
     this.selectedFileNames = [];
     this.selectedFiles = event.target.files;
-    this.previews = [];
+    if (this.selectedFiles) {
+      this.uploadedList = Array.from(this.selectedFiles);
+    }
     if (this.selectedFiles && this.selectedFiles[0]) {
       const numberOfFiles = this.selectedFiles.length;
       for (let i = 0; i < numberOfFiles; i++) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.previews.push(e.target.result);
+          // let obj={fileName:this.selectedFiles[i].name.toString(),hashedFile:e.target.result}
+          // this.tempList.push(obj)
         };
         reader.readAsDataURL(this.selectedFiles[i]);
         this.selectedFileNames.push(this.selectedFiles[i].name);
@@ -82,7 +91,8 @@ export class DialogFormComponent implements OnInit {
     this.message = [];
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
+        this.upload(i, this.uploadedList[i]);
+        this.uploadedList.slice(i, 1);
       }
     }
   }
@@ -119,6 +129,12 @@ export class DialogFormComponent implements OnInit {
   roomForm!: FormGroup;
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  preDeleteImg(i: number) {
+    let img = this.previews.find((e, index) => index === i);
+    console.log('img', img);
+    this.uploadedList.filter((e: string) => e !== img?.toString());
+    console.log('deleteImg', this.uploadedList);
   }
   addNewRoom() {
     console.log(this.roomForm.value);

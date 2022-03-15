@@ -37,6 +37,21 @@ label mat-icon{
     display: flex;
    margin-top: 10px;
 }
+.imgArray{
+       position: relative;
+}
+.btnClose{
+    position: absolute;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: -5px;
+    font-size: smaller;
+    text-align: center;
+    line-height: 4px;
+    border: 0;
+}
 .previewImg{
     display: block;
     padding:0 5px ;
