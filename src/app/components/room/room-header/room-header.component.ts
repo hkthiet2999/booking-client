@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   MatDialog,
@@ -16,7 +17,11 @@ import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 export class RoomHeaderComponent implements OnInit {
   @Output() onAddNewRoom = new EventEmitter<string>();
   @Output() onSearchRoom = new EventEmitter<string>();
-  constructor(public dialog: MatDialog, private roomService: RoomService) {}
+  constructor(
+    public dialog: MatDialog,
+    private roomService: RoomService,
+    private location: Location
+  ) {}
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogFormComponent, {
       width: '40%',
@@ -35,4 +40,7 @@ export class RoomHeaderComponent implements OnInit {
     // this.roomService.getDataForRoomTable({ keyword: value }).subscribe();
   }
   ngOnInit(): void {}
+  backToDashboard() {
+    this.location.back();
+  }
 }

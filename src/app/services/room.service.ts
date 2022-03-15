@@ -146,4 +146,9 @@ export class RoomService {
     );
     return this.http.request(req);
   }
+  deleteImage(roomId: string, imgIndex: number): Observable<object> {
+    return this.http.delete<object>(
+      `${this.url}/${roomId}/${imgIndex.toString()}`
+    );
+  }
 }

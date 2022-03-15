@@ -1,5 +1,12 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -130,11 +137,17 @@ export class DialogFormComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  preDeleteImg(i: number) {
-    let img = this.previews.find((e, index) => index === i);
-    console.log('img', img);
-    this.uploadedList.filter((e: string) => e !== img?.toString());
-    console.log('deleteImg', this.uploadedList);
+  deleteImg(i: number) {
+    try {
+      this.roomService.deleteImage(this.roomId, i).subscribe({
+        error: (err) => {
+          console.log(err);
+        },
+      });
+      this.previews = this.previews.filter((e, index) => index !== i);
+    } catch (error) {
+      console.log(error);
+    }
   }
   addNewRoom() {
     console.log(this.roomForm.value);
@@ -193,6 +206,9 @@ export class DialogFormComponent implements OnInit {
         console.log(this.previews, 'previews');
       }
     }
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.previews, 'previews doi ne');
   }
   ngDoCheck() {
     if (this.roomForm.dirty) {

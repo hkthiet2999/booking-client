@@ -56,7 +56,7 @@
       <div class="previewUploadedArea">
         <div *ngFor='let preview of previews,let i = index' class="imgArray">
           <img  [src]="preview" class="previewImg" width="60" height="60">
-          <button *ngIf="!preview.includes('data:image')" color="warn" aria-label="Example icon button with a filter list icon" class="btnClose" (click)="preDeleteImg(i)">
+          <button *ngIf="preview.includes('http://res.cloudinary.com/')" color="warn" aria-label="Example icon button with a filter list icon" class="btnClose" (click)="deleteImg(i)">
             X
           </button>
         </div>

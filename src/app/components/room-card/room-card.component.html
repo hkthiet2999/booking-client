@@ -4,7 +4,7 @@
       </div>
       <div *ngIf="isImages" class="carouselContainer"> 
         <img *ngFor="let img of data.images; let i=index" [src]="img"  class="img fade" [ngClass]="{'imgActive': selectedIndex===i}"/>  
-        <div *ngIf="indicators" class="dotContainer">
+        <div *ngIf="data.images.length>1" class="dotContainer">
           <span *ngFor="let img of data.images;let i=index" class="dot" [ngClass]="{'active':selectedIndex===i}" (click)="selectImages(i)"></span>
         </div> 
       </div>
