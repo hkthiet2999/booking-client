@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AuthService } from 'app/services/auth-service';
+import { BehaviorSubject } from 'rxjs';
 export interface File {
   data: any;
   progress: number;
@@ -20,8 +21,8 @@ export interface File {
   styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-  @ViewChild('fileUpload') fileUpload!: ElementRef;
-  @Input() user: any;
+  @ViewChild('fileUpload') fileUpload: ElementRef;
+  @Input() public user: any;
   filePath!: string;
   userValue!: any;
 
@@ -42,24 +43,31 @@ export class AvatarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userValue = this.authService.userValue;
+
+    this.userService.isUploadAvatar$.subscribe((isUploadAvatar) => {
+      if (isUploadAvatar) {
+        this.userService.findUserBy(this.userValue.id).subscribe((data) => {
+          this.user = data;
+          this.setPreview(false);
+        });
+      }
+    });
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   this.userValue = this.authService.userValue
-  // }
+  public isPreview$$ = new BehaviorSubject<boolean>(false);
+  isPreview$ = this.isPreview$$.asObservable();
+
+  setPreview(isPreview: boolean) {
+    this.isPreview$$.next(isPreview);
+  }
 
   onSave() {
-    this.isSave = !this.isSave;
     this.uploadFile();
-    // window.location.reload();
   }
 
   onCancel() {
-    this.isSave = false;
-    this.isPreview = false;
+    this.setPreview(false);
   }
-
-  onCancle() {}
 
   onClick() {
     const fileInput = this.fileUpload.nativeElement;
@@ -73,33 +81,37 @@ export class AvatarComponent implements OnInit {
           inProgress: false,
           progress: 0,
         };
-        this.isPreview = true;
-        this.isSave = true;
 
         let reader = new FileReader();
-
-        reader.onload = (_event: any) => {
-          this.user.avatarUrl = _event.target.result;
-          console.log(this.imgSrc, 'imgsrc');
-        };
-        console.log(this.isPreview, 'sau');
+        reader.onload = this._handleReaderLoaded.bind(this);
         reader.readAsDataURL(this.file.data);
-
-        console.log(this.imgSrc, 'imgsrc');
+        reader.onerror = function (error) {
+          console.log('Error: ', error);
+        };
       }
+      this.fileUpload.nativeElement.value = '';
     };
-    this.fileUpload.nativeElement.value = '';
   }
-
   async uploadFile() {
     const formData = new FormData();
-
-    await formData.append('image', this.file.data);
 
     this.userService
       .updateAvatar(formData, this.userValue.id)
       .subscribe((data) => {
         return this.userService.findUserBy(this.userValue.id);
       });
+
+    this.userService
+      .updateAvatar(formData, this.userValue.id)
+      .subscribe((data) => {
+        return this.userService.findUserBy(this.userValue.id);
+      });
+  }
+
+  _handleReaderLoaded(readerEvt: any) {
+    var binaryString = readerEvt.target.result;
+    this.imgSrc = binaryString;
+    console.log('imgSrc:', this.imgSrc);
+    this.setPreview(true);
   }
 }
