@@ -1,6 +1,6 @@
 <div class="container mt-5 mb-5">
   <div class="row">
-    <div class="col-lg-4 roomCard" *ngFor="let rd of roomData;let i as index" style="margin-bottom: 20px;">
+    <div class="col-lg-4 roomCard" *ngFor="let rd of roomData;let i = index" style="margin-bottom: 20px;">
         <app-room-card [e]="i" [totalE]="14" [data]="rd" [isImages]="rd.images? true:false"></app-room-card>
         <a class="buybtn" [routerLink]="['/booking', rd.id]"
           >Book Now &nbsp;<i class="bi bi-bag"></i
