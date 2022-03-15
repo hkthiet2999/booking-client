@@ -36,14 +36,19 @@ export class BookingDialogueComponent implements OnInit {
   }
 
   ngOnInit() {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      this.userId = JSON.parse(storedUser).id;
-    }
+    
+    setTimeout( () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        this.userId = JSON.parse(storedUser).id;
+      }
+    }, 0)
   }
   ngAfterViewInit(){
-    this.loadRooms()
-    this.cdref.detectChanges()
+    setTimeout( () => {
+      this.loadRooms()
+      this.cdref.detectChanges()
+    } ,0)
   }
 
  filter = (date: Date): boolean => {
