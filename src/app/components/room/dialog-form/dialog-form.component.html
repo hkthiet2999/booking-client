@@ -54,7 +54,13 @@
       </button>
         </div>
       <div class="previewUploadedArea">
-        <img *ngFor='let preview of previews' [src]="preview" class="previewImg" width="50">
+        <div *ngFor='let preview of previews,let i = index' class="imgArray">
+          <img  [src]="preview" class="previewImg" width="60" height="60">
+          <button *ngIf="!preview.includes('data:image')" color="warn" aria-label="Example icon button with a filter list icon" class="btnClose" (click)="preDeleteImg(i)">
+            X
+          </button>
+        </div>
+       
       </div>
 </div>
 <div mat-dialog-actions [align]="'end'">

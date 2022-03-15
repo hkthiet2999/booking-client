@@ -30,10 +30,10 @@ export class RoomTableComponent implements OnInit {
   public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  selectedIndex = 0;
-  indicators: boolean = true;
+
   nextPage: boolean = false;
   displayedColumns: string[] = [
+    'no',
     'roomName',
     'size',
     'price',
@@ -83,9 +83,6 @@ export class RoomTableComponent implements OnInit {
       this.paginator.length = this.objData.total;
       this.paginator.pageIndex = 0;
     }
-  }
-  selectImages(index: number) {
-    this.selectedIndex = index;
   }
   getAllPaginatedRoom(pagination?: Pagination) {
     this.isLoading$.next(true);

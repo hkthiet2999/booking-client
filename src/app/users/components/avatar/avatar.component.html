@@ -1,7 +1,7 @@
 <div class="user-avatar-container" *ngIf="user">
   <div mat-card-avatar class="user-avatar">
     <label class="hoverable">
-      <div [style.display]="!isPreview ? 'block' : 'none'">
+      <div>
         <img
           [src]="
             user.avatarUrl
@@ -11,9 +11,9 @@
         />
       </div>
 
-      <div [style.display]="isPreview ? 'block' : 'none'">
+      <!-- <div [style.display]="isPreview ? 'block' : 'none'">
         <img [src]="imgSrc" />
-      </div>
+      </div> -->
       <div class="hover-text">
         <button mat-button color="warn" (click)="onClick()">
           <mat-icon>cloud_upload</mat-icon>
