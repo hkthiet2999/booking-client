@@ -34,17 +34,21 @@ export class EditProfileComponent implements OnInit {
       gender: [null],
       dateOfBirth: [null],
     });
-    this.userId = this.authService.userValue.id;
+    setTimeout(() => {
 
-    this.userService.findUserBy(this.userId).subscribe((data) => {
-      this.user = data;
-      this.form.setValue({
-        firstname: this.user.firstname,
-        lastname: this.user.lastname,
-        gender: this.user.gender,
-        dateOfBirth: this.user.dateOfBirth,
+      this.userId = this.authService.userValue.id;
+  
+      this.userService.findUserBy(this.userId).subscribe((data) => {
+        this.user = data;
+        this.form.setValue({
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
+          gender: this.user.gender,
+          dateOfBirth: this.user.dateOfBirth,
+        });
       });
-    });
+    }, 0);
+    
 
   
   }
