@@ -89,7 +89,7 @@ export class AuthService {
       ),
       catchError((e) => {
         this.snackbar.open(
-          `User could not be registered, error: ${e.error.message}`,
+          `User could not be registered, error: ${e}`,
           'Close',
           {
             duration: 5000,
