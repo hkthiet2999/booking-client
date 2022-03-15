@@ -1,7 +1,12 @@
 <div class="user-avatar-container" *ngIf="user">
   <div mat-card-avatar class="user-avatar">
     <label class="hoverable">
-      <div [style.display]="!isPreview ? 'block' : 'none'">
+      <div *ngIf="isPreview$ | async; else preview">
+        
+        <img [src]="imgSrc" />
+      </div>
+      
+      <ng-template #preview>
         <img
           [src]="
             user.avatarUrl
@@ -9,11 +14,8 @@
               : 'assets/images/user-null-avatar.png'
           "
         />
-      </div>
+      </ng-template>
 
-      <div [style.display]="isPreview ? 'block' : 'none'">
-        <img [src]="imgSrc" />
-      </div>
       <div class="hover-text">
         <button mat-button color="warn" (click)="onClick()">
           <mat-icon>cloud_upload</mat-icon>
@@ -33,7 +35,8 @@
   </div>
 </div>
 <br />
-<div [style.display]="isSave ? 'block' : 'none'">
+
+<div *ngIf="isPreview$ | async;" fxLayout="row" fxLayoutGap="8px" style="justify-content: center;"> 
   <button
     mat-stroked-button 
     color="primary"
@@ -54,3 +57,4 @@
     Cancle
   </button>
 </div>
+

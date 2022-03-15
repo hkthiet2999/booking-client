@@ -1,6 +1,7 @@
 import { UserService } from './../../services/user.services';
 import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { AuthService } from 'app/services/auth-service';
+import { BehaviorSubject } from 'rxjs';
 export interface File {
   data: any;
   progress: number;
@@ -13,8 +14,8 @@ export interface File {
   styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-  @ViewChild('fileUpload') fileUpload!: ElementRef;
-  @Input() user: any;
+  @ViewChild('fileUpload') fileUpload: ElementRef;
+  @Input() public user: any;
   filePath!: string;
   userValue!: any;
   
@@ -36,29 +37,36 @@ export class AvatarComponent implements OnInit {
 
   ngOnInit(
   ): void{
-    this.userValue = this.authService.userValue
+    this.userValue = this.authService.userValue;
+
+    this.userService.isUploadAvatar$.subscribe((isUploadAvatar) =>{
+      if(isUploadAvatar){
+        this.userService.findUserBy(this.userValue.id).subscribe((data) => {
+          this.user = data;
+          this.setPreview(false);
+        });
+      }
+
+    } );
 
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   this.userValue = this.authService.userValue
-  // }
 
+  public isPreview$$ = new BehaviorSubject<boolean>(false);
+  isPreview$ = this.isPreview$$.asObservable();
 
-  isPreview = false
-  isSave = false;
+  setPreview(isPreview: boolean) {
+    this.isPreview$$.next(isPreview);
+  }
+
   onSave() {
-    this.isSave = !this.isSave;
     this.uploadFile();
-    // window.location.reload();
   }
 
   onCancel(){
-    this.isSave = false;
-    this.isPreview = false;
+    
+    this.setPreview(false);
   }
-
-  onCancle() {}
 
   onClick() {
     const fileInput = this.fileUpload.nativeElement;
@@ -72,21 +80,14 @@ export class AvatarComponent implements OnInit {
           progress: 0,
         };
         
-        this.isSave = true;
-  
         let reader = new FileReader();
-  
-        
-        reader.onload = (_event) => { 
-          this.imgSrc = reader.result; 
-        }
+        reader.onload = this._handleReaderLoaded.bind(this);
         reader.readAsDataURL(this.file.data); 
-  
-        this.isPreview = true;
-        console.log(this.imgSrc);
+        reader.onerror = function (error) {
+          console.log('Error: ', error);
+        };
 
       }
-
 
     };
     this.fileUpload.nativeElement.value = '';
@@ -101,9 +102,16 @@ export class AvatarComponent implements OnInit {
       formData,
       this.userValue.id
     ).subscribe((data) => {
-      return this.userService.findUserBy(this.userValue.id)
+      return this.userService.findUserBy(this.userValue.id);
     });
 
+  }
+
+  _handleReaderLoaded(readerEvt: any) {
+    var binaryString = readerEvt.target.result;
+    this.imgSrc = binaryString;
+    console.log('imgSrc:', this.imgSrc);
+    this.setPreview(true);
   }
 
 }
