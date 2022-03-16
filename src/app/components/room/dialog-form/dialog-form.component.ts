@@ -1,3 +1,4 @@
+import { Room } from './../../../services/booking.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   Component,
@@ -19,7 +20,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { RoomService } from 'app/services/room.service';
-import { Observable } from 'rxjs';
+import { catchError, combineLatest, forkJoin, merge, Observable, ObservableInput, of, switchMap, tap, throwError, zip } from 'rxjs';
 
 export interface DialogData {
   title: string;
@@ -47,6 +48,7 @@ export class DialogFormComponent implements OnInit {
   isChange: boolean = true;
   roomId: string = '';
   selectedFiles?: FileList;
+  selectedFilesOfArray: any;
   selectedFileNames: string[] = [];
   progressInfos: any[] = [];
   message: string[] = [];
@@ -94,39 +96,105 @@ export class DialogFormComponent implements OnInit {
 
     return dirtyValues;
   }
-  uploadFiles(): void {
+  uploadFiles(roomId: string): void {
     this.message = [];
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.uploadedList[i]);
+        this.upload(i, this.uploadedList[i], roomId);
         this.uploadedList.slice(i, 1);
       }
+      this.roomForm.reset();
+      this.dialogRef.close('add');
     }
+    
   }
-  upload(idx: number, file: File): void {
-    console.log(this.roomId, 'haha');
+
+  subscription: any;
+  // upload(idx: number, file: File, seriousRoomID: string): void {
+  //   // console.log('A seriousRoomID, shouldnt laugh here =))', this.roomId);
+  //   this.progressInfos[idx] = { value: 0, fileName: file.name };
+  //   if (file) {
+  //     this.roomService.uploadRoomImages(seriousRoomID, file).subscribe({
+  //       next: (event) => {
+  //         if (event.type === HttpEventType.UploadProgress && event.total) {
+  //           this.progressInfos[idx].value = Math.round(
+              
+  //             (100 * event.loaded) / event.total
+  //           );
+  //         } else if (event instanceof HttpResponse) {
+  //           const msg = 'Uploaded the file successfully: ' + file.name;
+  //           this.message.push(msg);
+  //           // this.imageInfos = this.s.getFiles();
+  //         }
+  //       },
+  //       error: (err) => {
+  //         this.progressInfos[idx].value = 0;
+  //         const msg = 'Could not upload the file: ' + file.name;
+  //         this.message.push(msg);
+  //       },
+
+  //     }
+  //     );
+  //   }
+  // }
+
+  // Harry
+  upload(idx: number, file: File, seriousRoomID: string): Observable<any> {
+    // console.log('A seriousRoomID, shouldnt laugh here =))', this.roomId);
+
     this.progressInfos[idx] = { value: 0, fileName: file.name };
-    if (file) {
-      this.roomService.uploadRoomImages(this.roomId, file).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(
-              (100 * event.loaded) / event.total
-            );
-          } else if (event instanceof HttpResponse) {
-            const msg = 'Uploaded the file successfully: ' + file.name;
-            this.message.push(msg);
-            // this.imageInfos = this.s.getFiles();
-          }
-        },
-        (err: any) => {
-          this.progressInfos[idx].value = 0;
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-        }
-      );
+    this.message = [];
+    // if (this.selectedFiles) {
+    //   for (let i = 0; i < this.selectedFiles.length; i++) {
+    //     this.upload(i, this.uploadedList[i], roomId);
+    //     this.uploadedList.slice(i, 1);
+    //   }
+      
+    // }
+    // 
+    if(this.selectedFiles){
+      this.selectedFilesOfArray = Array.from(this.selectedFiles);
+
     }
+    
+    if (file && this.selectedFilesOfArray) {
+      console.log('Pre upload');
+      let uploadEachImg = this.selectedFilesOfArray.map( (file: File, index: any) => {
+        return this.roomService.uploadRoomImages(seriousRoomID, file).pipe(
+          tap((event) => {
+            if (event.type === HttpEventType.UploadProgress && event.total) {
+              this.progressInfos[idx].value = Math.round(
+                
+                (100 * event.loaded) / event.total
+              );
+              this.uploadedList.slice(index, 1);
+              console.log('Uploaded');
+            } else if (event instanceof HttpResponse) {
+              const msg = 'Uploaded the file successfully: ' + file.name;
+              this.message.push(msg);
+              // this.imageInfos = this.s.getFiles();
+            }
+          }),
+          catchError(
+            (err) => {
+            this.progressInfos[idx].value = 0;
+            const msg = 'Could not upload the file: ' + file.name;
+            this.message.push(msg);
+            this.uploadedList.slice(index, 1);
+            return throwError(err);
+          }),
+        );
+      });
+      
+      
+      return combineLatest(uploadEachImg);
+    };
+    return of(false);
+    
   }
+
+  // end upload
+
   constructor(
     public dialogRef: MatDialogRef<DialogFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -149,22 +217,37 @@ export class DialogFormComponent implements OnInit {
       console.log(error);
     }
   }
-  addNewRoom() {
-    console.log(this.roomForm.value);
+  addNewRoom():  Observable<any> {
+
+    // Harry
+
     if (this.roomForm.valid) {
-      this.roomService.createRoom(this.roomForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.roomForm.reset();
-          this.dialogRef.close('add');
-        },
-        error: (err) => {
-          alert(err.toString());
-          console.log(err);
-          this.dialogRef.close();
-        },
-      });
+
+      console.log('roomForm.valid: ', this.roomForm.valid);
+      this.roomService.createRoom(this.roomForm.value).pipe(
+        tap(room => {
+          this.roomId = room.id as string;
+
+        }),
+
+          
+        switchMap( (): any => {
+
+          if(this.selectedFiles){
+
+            this.upload(0, this.uploadedList[0], this.roomId).subscribe().add( () => {
+              this.roomForm.reset();
+              this.dialogRef.close('add');
+            })
+
+            return of(true);
+          }
+          
+        })
+
+      ).subscribe();
     }
+    return of(false);
   }
   updateARoom() {
     let payload: object = {};

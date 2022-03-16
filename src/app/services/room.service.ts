@@ -134,7 +134,9 @@ export class RoomService {
   uploadRoomImages(roomId: string, file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('image', file);
-    console.log('khang', roomId);
+    console.log('One file:', file);
+    console.log('Form data: ', formData);
+    console.log('Here to upload Image by id:', roomId);
     const req = new HttpRequest(
       'POST',
       `${this.url}/images/${roomId}`,
@@ -144,7 +146,7 @@ export class RoomService {
         responseType: 'json',
       }
     );
-    return this.http.request(req);
+    return this.http.request(req)
   }
   deleteImage(roomId: string, imgIndex: number): Observable<object> {
     return this.http.delete<object>(
