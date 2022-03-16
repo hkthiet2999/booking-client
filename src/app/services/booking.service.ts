@@ -7,12 +7,14 @@ declare const Zone: any;
 
 @Injectable()
 export class BookingConnectionService {
-  constructor(private http: HttpClient,private _snackbar :MatSnackBar) {}
   port = 3000
   rootURL=`http://localhost:${this.port}/`
-  
   private currentBooking: ReplaySubject<Booking> = new ReplaySubject();
-
+  headers :HttpHeaders;
+  constructor(private http: HttpClient,private _snackbar :MatSnackBar) {
+    this.headers = new HttpHeaders().set('Content-Type', 'application/json');
+  }
+  
   public get getCurrentBooking(): Observable<Booking> {
     return this.currentBooking.asObservable();
   }
@@ -22,37 +24,21 @@ export class BookingConnectionService {
 
   
   fetchAllBooking(): Observable<BookingDTO[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+    
     return this.http.get<BookingDTO[]>(
-      `${this.rootURL}booking`,
-      httpOptions
+      `${this.rootURL}booking`
     );
   }
 
-  //====================== NOTE: BELOW HERE ARE HTTP SCRIPTS CREATED TO RETRIEVE DATA FROM DATABASE FOR TESTING ONLY ==================
-
   fetchAllRoom(): Observable<RoomDTO[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.get<RoomDTO[]>(`${this.rootURL}rooms`, httpOptions);
+   
+    return this.http.get<RoomDTO[]>(`${this.rootURL}rooms`);
   }
   getRoomTimesheet(uuid: string): Observable<Date[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+    
     return this.http
       .get<Date[]>(
-        `${this.rootURL}booking/timetable/` + uuid,
-        httpOptions
+        `${this.rootURL}booking/timetable/` + uuid
       )
       .pipe((value) => {
         return value;
@@ -100,13 +86,9 @@ export class BookingConnectionService {
   }
 
   deleteBooking(bookinguuid:string){
-    const httpOptions = {
-      headers: new HttpHeaders({
-      }),
-    };
+    
     return this.http.delete(
-      `${this.rootURL}booking/${bookinguuid}`,
-      httpOptions
+      `${this.rootURL}booking/${bookinguuid}`
     ).pipe(
       tap(() =>
         this._snackbar.open('Delete Successful', 'Close', {
