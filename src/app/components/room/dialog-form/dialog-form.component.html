@@ -24,7 +24,7 @@
           </mat-form-field>
     </form>
         <div class="uploadImgArea">
-          <div *ngFor="let progressInfo of progressInfos">
+          <!-- <div *ngFor="let progressInfo of progressInfos">
             <span>{{ progressInfo.fileName }}</span>
             <mat-toolbar class="progress-bar">
               <mat-progress-bar
@@ -33,7 +33,7 @@
               ></mat-progress-bar>
               <span class="progress">{{ progressInfo.value }}%</span>
             </mat-toolbar>
-          </div>
+          </div> -->
           <input
             type="file"
             id="fileInput"
@@ -46,6 +46,7 @@
           <button
         mat-flat-button
         color="primary"
+        *ngIf="!isCreate"
         [disabled]="!selectedFiles"
         (click)="uploadFiles()"
         style="margin-left: 20px;"

@@ -131,10 +131,16 @@ export class RoomService {
         })
       );
   }
-  uploadRoomImages(roomId: string, file: File): Observable<HttpEvent<any>> {
+  uploadRoomImages(
+    roomId: string,
+    files: FileList
+  ): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('image', file);
-    console.log('khang', roomId);
+    let fileList: any;
+    Array.from(files).forEach((file) => {
+      formData.append('image', file);
+    });
+    console.log('FormDta', formData);
     const req = new HttpRequest(
       'POST',
       `${this.url}/images/${roomId}`,

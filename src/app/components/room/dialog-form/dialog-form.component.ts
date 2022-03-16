@@ -19,7 +19,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { RoomService } from 'app/services/room.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface DialogData {
   title: string;
@@ -31,10 +31,6 @@ export interface DialogData {
     price: number;
     images: string[];
   };
-}
-export interface temp {
-  fileName: string;
-  hashedFile: string;
 }
 @Component({
   selector: 'app-dialog-form',
@@ -52,7 +48,6 @@ export class DialogFormComponent implements OnInit {
   message: string[] = [];
   previews: string[] = [];
   imageInfos?: Observable<any>;
-  tempList: temp[];
   uploadedList: any;
   selectFiles(event: any): void {
     console.log(event.target.files);
@@ -69,8 +64,6 @@ export class DialogFormComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.previews.push(e.target.result);
-          // let obj={fileName:this.selectedFiles[i].name.toString(),hashedFile:e.target.result}
-          // this.tempList.push(obj)
         };
         reader.readAsDataURL(this.selectedFiles[i]);
         this.selectedFileNames.push(this.selectedFiles[i].name);
@@ -97,34 +90,33 @@ export class DialogFormComponent implements OnInit {
   uploadFiles(): void {
     this.message = [];
     if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.uploadedList[i]);
-        this.uploadedList.slice(i, 1);
-      }
+      this.upload(this.selectedFiles);
     }
   }
-  upload(idx: number, file: File): void {
-    console.log(this.roomId, 'haha');
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-    if (file) {
-      this.roomService.uploadRoomImages(this.roomId, file).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(
-              (100 * event.loaded) / event.total
-            );
-          } else if (event instanceof HttpResponse) {
-            const msg = 'Uploaded the file successfully: ' + file.name;
-            this.message.push(msg);
-            // this.imageInfos = this.s.getFiles();
-          }
-        },
-        (err: any) => {
-          this.progressInfos[idx].value = 0;
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-        }
-      );
+  upload(files: FileList): void {
+    // this.progressInfos[idx] = { value: 0, fileName: file.name };
+    if (files) {
+      this.roomService
+        .uploadRoomImages(this.roomId, files)
+        .subscribe({
+          next: (event: any) => {
+            console.log(event);
+          },
+          error: (err: any) => {
+            console.log(err);
+            // this.progressInfos[idx].value = 0;
+            // const msg = 'Could not upload the file: ' + file.name;
+            // this.message.push(msg);
+          },
+          complete: () => {
+            console.log('complete upload');
+          },
+        })
+        .add(() => {
+          this.roomForm.reset();
+          this.dialogRef.close('add');
+          // console.log('complete upload');
+        });
     }
   }
   constructor(
@@ -154,9 +146,12 @@ export class DialogFormComponent implements OnInit {
     if (this.roomForm.valid) {
       this.roomService.createRoom(this.roomForm.value).subscribe({
         next: (res) => {
-          console.log(res);
-          this.roomForm.reset();
-          this.dialogRef.close('add');
+          if (res.id) {
+            this.roomId = res.id;
+            if (this.previews) {
+              this.uploadFiles();
+            }
+          }
         },
         error: (err) => {
           alert(err.toString());
