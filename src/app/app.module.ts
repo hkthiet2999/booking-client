@@ -12,7 +12,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminModule } from './admin/admin.module';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout/admin-layout.component';
 import { LoadingInterceptor } from './common/interceptors/loading.interceptor';
-import { LoadingService } from './common/services/loading.service';
 // Tom
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -74,7 +73,6 @@ import { MaterialModule } from './material.module';
     AppComponent,
   ],
   providers: [
-    LoadingService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -24,7 +24,7 @@ export class AppComponent {
     return this.user && this.user.role === Role.Admin;
   }
 
-  logout() {
-    this.authenticationService.logout();
-  }
+  // logout() {
+  //   this.authenticationService.logout();
+  // }
 }

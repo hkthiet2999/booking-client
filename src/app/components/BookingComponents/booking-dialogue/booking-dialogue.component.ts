@@ -36,19 +36,14 @@ export class BookingDialogueComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    setTimeout( () => {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        this.userId = JSON.parse(storedUser).id;
-      }
-    }, 0)
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.userId = JSON.parse(storedUser).id;
+    }
   }
   ngAfterViewInit(){
-    setTimeout( () => {
-      this.loadRooms()
-      this.cdref.detectChanges()
-    } ,0)
+    this.loadRooms()
+    this.cdref.detectChanges()
   }
 
  filter = (date: Date): boolean => {
@@ -92,6 +87,9 @@ export class BookingDialogueComponent implements OnInit {
       this.conn.getRoomTimesheet(this.SelectedRoom.uuid).subscribe(
         (data)=>{
           this.SelectedRoomTimesheet=data;
+          if (this.SelectedRoom.uuid==this.indata.roomid){
+            this.SelectedRoomTimesheet=this.SelectedRoomTimesheet.filter((element)=> element.toString()!=this.indata.check_in_date.toString()||element.toString()!=this.indata.check_in_date.toString())
+         }
       })
   }
 

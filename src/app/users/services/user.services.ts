@@ -51,7 +51,7 @@ export class UserService {
   }
 
   updateAvatar(formData: FormData, id: string) {
-    
+    console.log('formData: ', formData);
     return this.http.patch<any>(
       `${this.domain}/users/avatar/upload/${id}`,
       formData,

@@ -62,6 +62,10 @@
                 *ngIf="password.touched && password.hasError('required')"
                 >Password is required</mat-error
               >
+              <mat-error
+                *ngIf="password.touched && password.hasError('minlength')"
+                >Password must be longer than or equal to 6 characters</mat-error
+              >
             </mat-form-field>
 
             <mat-form-field>

@@ -13,8 +13,8 @@ import {
   throwError,
 } from 'rxjs';
 import { IUser } from '../components/auth/user.interface';
-const port = 3029
-const rootURL=`localhost:${port}`
+const port = 3029;
+const rootURL = `localhost:${port}`;
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -23,11 +23,14 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User>(<User>{
-    id: '',
-    role: null,
-    access_token: '',
-  });
+  // private userSubject = new BehaviorSubject<User>(<User>{
+  //   id: '',
+  //   role: null,
+  //   access_token: '',
+  // });
+
+  private userSubject: BehaviorSubject<User>;
+
   get user(): Observable<User> {
     return this.userSubject.asObservable();
   }
@@ -41,7 +44,19 @@ export class AuthService {
     private router: Router,
     private http: HttpClient,
     private snackbar: MatSnackBar
-  ) {}
+  ) {
+    const localUser = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log('Local User', localUser);
+    if (Object.keys(localUser).length !== 0) {
+      this.userSubject = new BehaviorSubject<User>(localUser);
+    } else {
+      this.userSubject = new BehaviorSubject<User>(<User>{
+        id: '',
+        role: null,
+        access_token: '',
+      });
+    }
+  }
 
   login(email: string, password: string) {
     return this.http
@@ -89,7 +104,7 @@ export class AuthService {
       ),
       catchError((e) => {
         this.snackbar.open(
-          `User could not be registered, error: ${e.error.message}`,
+          `User could not be registered, error: ${e}`,
           'Close',
           {
             duration: 5000,

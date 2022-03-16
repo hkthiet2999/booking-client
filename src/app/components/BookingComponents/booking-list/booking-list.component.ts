@@ -93,7 +93,7 @@ export class BookingListComponent implements OnInit, OnChanges {
         case 'cInDate':
           return this.compareDate(a.check_in_date, b.check_in_date);
         case 'cOutDate':
-          return this.compareDate(a.created_date, b.created_date);
+          return this.compareDate(a.check_out_date, b.check_out_date);
         case 'CreateDate':
           return this.compareDate(a.created_date, b.created_date);
         default:

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./booking-section.component.scss'],
 })
 export class BookingSectionComponent implements OnInit {
-  constructor() {}
+  constructor(private location: Location) {}
 
   ngOnInit(): void {}
+
+  backToDashboard(){
+    this.location.back()
+  }
 }
